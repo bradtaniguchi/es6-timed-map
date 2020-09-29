@@ -1,4 +1,4 @@
-#es6-timed-map
+# es6-timed-map
 
 An es6-map-like utility class
 
