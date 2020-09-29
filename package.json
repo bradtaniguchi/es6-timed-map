@@ -1,12 +1,19 @@
 {
   "name": "es6-timed-map",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "description": "An es6-map-like utility class ",
+  "main": "dist/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradtaniguchi/es6-timed-map.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bradtaniguchi/es6-timed-map/issues"
+  },
+  "homepage": "https://github.com/bradtaniguchi/es6-timed-map#readme",
+  "keywords": ["es6", "map", "timed", "cache"],
+  "author": "Brad Taniguchi",
+  "license": "MIT"
 }
