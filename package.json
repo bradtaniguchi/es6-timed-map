@@ -1,7 +1,7 @@
 {
   "name": "es6-timed-map",
   "version": "0.0.0",
-  "description": "An es6-map-like utility class ",
+  "description": "An es6-map-like utility class",
   "main": "dist/src/index.js",
   "scripts": {},
   "repository": {
