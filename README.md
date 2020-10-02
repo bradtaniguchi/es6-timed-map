@@ -1,6 +1,6 @@
 # es6-timed-map
 
-An es6-map-like utility class
+An es6-map-like utility class with time based functions and support
 
 ## Summary
 
