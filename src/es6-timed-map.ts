@@ -2,15 +2,14 @@
  * @name Es6TimedMap
  * An es6-map-like utility class
  */
-export default class Es6TimedMap<K, V, E> implements Map<K, V> {
-  constructor(entries: readonly [K, V, E] | null) {}
+export default class Es6TimedMap<K, V, E> {
+  constructor(private _entries?: readonly [K, V, E] | null) {}
 
-  public get size() {
-    // TODO:
-    return 0;
+  public get size(): number {
+    return this.entries?.length || 0;
   }
 
-  public clear() {
+  public clear(): void {
     // TODO:
   }
 
@@ -33,7 +32,7 @@ export default class Es6TimedMap<K, V, E> implements Map<K, V> {
 
   public has(key: K): boolean {
     // TODO:
-    return;
+    return true;
   }
 
   public set(

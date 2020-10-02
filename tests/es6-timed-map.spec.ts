@@ -1,6 +1,7 @@
 import Es6TimedMap from '../src/es6-timed-map';
 
 describe('Es6TimedMap', () => {
+  const temp = 0;
   test('can be created', () => expect(new Es6TimedMap()).toBeTruthy());
 
   // method/api tests for es6-map coverage
