@@ -1,12 +1,13 @@
 {
   "name": "es6-timed-map",
   "version": "0.0.0",
-  "description": "An es6-map-like utility class",
+  "description": "An es6-map-like utility class with time based functions and support",
   "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
     "test": "npx jest",
-    "lint": "npx eslint ./src ./tests"
+    "lint": "npx eslint ./src ./tests",
+    "clean": "npx rimraf ./lib"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "jest": "^26.4.2",
     "prettier": "^2.1.2",
     "pretty-quick": "^3.0.2",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
   },
