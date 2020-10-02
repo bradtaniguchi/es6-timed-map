@@ -5,7 +5,8 @@
   "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "npx jest"
+    "test": "npx jest",
+    "lint": "npx eslint ./src ./test"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^7.10.0",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "prettier": "^2.1.2",
