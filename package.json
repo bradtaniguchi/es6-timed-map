@@ -23,6 +23,12 @@
     "timed",
     "cache"
   ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "es6-timed-map.js",
+    "es6-timed-map.d.ts"
+  ],
   "author": "Brad Taniguchi",
   "license": "MIT",
   "devDependencies": {
