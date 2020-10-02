@@ -6,7 +6,7 @@
  * Due to the similar surface area, use the Map doc reference from here:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
  */
-export default class Es6TimedMap<K, V, E> {
+export default class Es6TimedMap<K, V> {
   /**
    * The core map data, used to keep track of the data
    */
@@ -17,7 +17,7 @@ export default class Es6TimedMap<K, V, E> {
    * TODO: update timer type, might be wrong or to generic
    */
   private _timers = new Map<K, NodeJS.Timeout | number>();
-  constructor(_entries?: readonly [K, V, E] | null) {
+  constructor(_entries?: readonly [K, V] | null) {
     // TODO: remove any call!
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this._core = _entries ? new Map<K, V>(_entries as any) : new Map();
@@ -46,7 +46,7 @@ export default class Es6TimedMap<K, V, E> {
     value: V,
     expirationTime: number,
     expirationCallback?: (key: K, value: V) => void
-  ): Es6TimedMap<K, V, E> {
+  ): Es6TimedMap<K, V> {
     this._core.set(key, value);
     this._timers.set(
       key,
@@ -91,8 +91,8 @@ export default class Es6TimedMap<K, V, E> {
    * TODO: check typing for `thisArg` object
    */
   public forEach(
-    callback: (value: V, key: K, timedMap: Es6TimedMap<K, V, E>) => void,
-    thisArg?: Es6TimedMap<K, V, E>
+    callback: (value: V, key: K, timedMap: Es6TimedMap<K, V>) => void,
+    thisArg?: Es6TimedMap<K, V>
   ): void {
     return this._core.forEach((value, key) =>
       callback(value, key, thisArg || this)

@@ -1,14 +1,24 @@
 import Es6TimedMap from '../src/es6-timed-map';
 
 describe('Es6TimedMap', () => {
-  const temp = 0;
+  let timedMap: Es6TimedMap<string, string>;
+  // TODO: add cross browser/environment checks/logging
+  beforeEach(() => {
+    timedMap = new Es6TimedMap();
+  });
+
   test('can be created', () => expect(new Es6TimedMap()).toBeTruthy());
 
   // method/api tests for es6-map coverage
   describe('delete', () => {
-    test.todo('exists');
+    test.todo('exists', () => {
+      expect(timedMap.delete).toBeTruthy();
+      expect(typeof timedMap.delete === 'function').toBeTruthy();
+    });
     test.todo('returns true if item existed and has been removed');
     test.todo('returns false if the element does not exist');
+    test.todo('returns false if the element expired');
+    test.todo('returns false if the element expired');
     // TODO:
   });
   describe('size', () => {
