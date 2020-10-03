@@ -4,9 +4,9 @@
   "description": "An es6-map-like utility class with time based functions and support",
   "main": "dist/src/index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "npx jest",
     "lint": "npx eslint ./src ./tests",
+    "test": "npx jest",
+    "build": "tsc",
     "clean": "npx rimraf ./lib"
   },
   "repository": {
