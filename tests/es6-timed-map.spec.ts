@@ -11,7 +11,7 @@ describe('Es6TimedMap', () => {
 
   // method/api tests for es6-map coverage
   describe('delete', () => {
-    test.todo('exists', () => {
+    test('exists', () => {
       expect(timedMap.delete).toBeTruthy();
       expect(typeof timedMap.delete === 'function').toBeTruthy();
     });
