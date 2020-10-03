@@ -92,8 +92,23 @@ describe('Es6TimedMap', () => {
     // TODO:
   });
   describe('onExpire', () => {
-    test.todo('exists');
-    test.todo('returns the item on expiration');
-    // TODO:
+    test('exists', () => {
+      expect(timedMap.delete).toBeTruthy();
+      expect(typeof timedMap.onExpire === 'function').toBeTruthy();
+    });
+    test('returns the item on expiration', () => {
+      jest.useFakeTimers();
+      timedMap.set('foo', 'bar', 1000);
+
+      const onExpire = jest.fn();
+      timedMap.onExpire = onExpire;
+
+      jest.runAllTimers();
+
+      expect(onExpire).toBeCalledWith(
+        expect.stringMatching('foo'),
+        expect.stringMatching('bar')
+      );
+    });
   });
 });
