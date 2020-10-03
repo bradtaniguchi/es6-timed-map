@@ -93,8 +93,7 @@ describe('Es6TimedMap', () => {
   });
   describe('onExpire', () => {
     test('exists', () => {
-      expect(timedMap.delete).toBeTruthy();
-      expect(typeof timedMap.onExpire === 'function').toBeTruthy();
+      expect(timedMap.onExpire).toBeNull();
     });
     test('returns the item on expiration', () => {
       jest.useFakeTimers();

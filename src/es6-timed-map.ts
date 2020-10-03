@@ -52,7 +52,7 @@ export default class Es6TimedMap<K, V> {
       key,
       setTimeout(() => {
         if (expirationCallback) expirationCallback(key, value);
-        this.onExpire(key, value);
+        if (this.onExpire) this.onExpire(key, value);
         this._core.delete(key);
         this._timers.delete(key);
       }, expirationTime)
@@ -142,7 +142,7 @@ export default class Es6TimedMap<K, V> {
   /**
    * Event handler triggered whenever an item from the map is expired
    */
-  public onExpire(key: K, value: V): void {}
+  public onExpire: ((key: K, value: V) => void) | null = null;
 
   // TODO: Add time specific methods
   // - timers - list of timers
