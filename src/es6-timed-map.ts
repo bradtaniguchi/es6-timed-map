@@ -152,6 +152,10 @@ export default class Es6TimedMap<K, V> {
    */
   public onExpire: ((key: K, value: V) => void) | null = null;
 
+  /**
+   * Resets a timer or updates its expiration time
+   * @param newtime time to set the timer to
+   */
   public touch(key: K, newtime?: number): boolean {
     const timer = this._timers.get(key);
     const value = this._core.get(key);
