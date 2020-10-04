@@ -87,8 +87,43 @@ describe('Es6TimedMap', () => {
     // TODO:
   });
   describe('touch', () => {
-    test.todo('exists');
-    test.todo('updates existing timers by the given amount');
+    test('exists', () => {
+      expect(timedMap.touch).toBeTruthy();
+      expect(typeof timedMap.touch === 'function').toBeTruthy();
+    });
+    test('updates existing timers by the given amount', () => {
+      jest.useFakeTimers();
+
+      const onExpire = jest.fn();
+      timedMap.set('foo', 'bar', 1000, onExpire);
+
+      jest.advanceTimersByTime(500);
+      timedMap.touch('foo', 2000);
+      jest.advanceTimersByTime(1000);
+
+      //If timedMap.touch failed, the callback would be triggered
+      expect(onExpire).not.toBeCalled();
+
+      jest.runAllTimers();
+      expect(onExpire).toBeCalled();
+    });
+    test('reset existing timer', () => {
+      jest.useFakeTimers();
+
+      const onExpire = jest.fn();
+      timedMap.set('foo', 'bar', 1000, onExpire);
+
+      jest.advanceTimersByTime(500);
+      timedMap.touch('foo');
+      jest.advanceTimersByTime(500);
+      expect(onExpire).not.toBeCalled();
+
+      jest.advanceTimersByTime(500);
+      expect(onExpire).toBeCalled();
+    });
+    test('fail to update missing key', () => {
+      expect(timedMap.touch('foo')).toBeFalsy();
+    });
     // TODO:
   });
   describe('onExpire', () => {
