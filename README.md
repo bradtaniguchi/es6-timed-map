@@ -19,7 +19,17 @@ Thank you, keep learing, keep building and happy hacktoberfest! :+1:
 
 ## Installation
 
-TDB...
+Clone the repo and install the dependencies.
+
+```
+git clone https://github.com/bradtaniguchi/es6-timed-map.git
+cd es6-timed-map
+```
+
+```
+nvm use
+npm install
+```
 
 ## Usage
 
