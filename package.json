@@ -7,7 +7,7 @@
     "lint": "eslint ./src ./tests",
     "test": "jest",
     "build": "tsc",
-    "clean": "npx rimraf ./lib"
+    "clean": "rimraf ./lib"
   },
   "repository": {
     "type": "git",
