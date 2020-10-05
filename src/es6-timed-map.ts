@@ -21,7 +21,6 @@ export default class Es6TimedMap<K, V> {
   /**
    * A map of timers where the key is the same key provided
    * to the `_core` map.
-   * TODO: update timer type, might be wrong or to generic
    */
   private _timers = new Map<K, Timeout<K, V>>();
   constructor(_entries?: readonly [K, V] | null) {
