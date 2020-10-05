@@ -4,6 +4,7 @@
 
 <!-- toc -->
 
+- [Installation](#installation)
 - [Summary](#summary)
 - [Linting the code](#linting-the-code)
 - [Running tests](#running-tests)
@@ -13,6 +14,31 @@
 - [Have Questions?](#have-questions)
 
 <!-- tocstop -->
+
+## Installation
+
+Clone the repository.
+
+```
+git clone https://github.com/bradtaniguchi/es6-timed-map.git
+cd es6-timed-map
+```
+
+Install required Node.js version in your machine as mentioned in .nvmrc
+
+or
+
+If you have nvm installed, run the command
+
+```
+nvm use
+```
+
+Install the dependencies
+
+```
+npm install
+```
 
 ## Summary
 
