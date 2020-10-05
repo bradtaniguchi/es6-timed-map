@@ -33,7 +33,7 @@ export default class Es6TimedMap<K, V> {
    * Returns the number of key/value pairs in the `TimedMap` object
    */
   public get size(): number {
-    return this.entries?.length || 0;
+    return this._core?.size || 0;
   }
 
   /**
