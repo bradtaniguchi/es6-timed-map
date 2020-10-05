@@ -15,7 +15,7 @@ This repo is participating in [hacktoberfest 2020](https://hacktoberfest.digital
 
 This library is **very much a work in progress**, so there are missing features, lacks of tests, missing documentation (like the rest of this repo), and non-intentional design flaws. This library has the main goal of providing a framework to **contribute and learn**, while still building something that should be useful to someone somewhere at sometime. Along with the goal of providing a framework and environment to contribute to open source, this library should allow everyone to get their fair share of hacktoberfest PR's, so use your best judgement so everyone can contribute!
 
-Thank you, keep learing, keep building and happy hacktoberfest! :+1:
+Thank you, keep learning, keep building and happy hacktoberfest! :+1:
 
 ## Installation
 
