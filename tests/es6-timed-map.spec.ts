@@ -21,9 +21,35 @@ describe('Es6TimedMap', () => {
     test.todo('returns false if the element expired');
     // TODO:
   });
-  describe('size', () => {
-    test.todo('defaults to 0');
-    // TODO:
+  describe.only('size', () => {
+    test('defaults to 0', () => expect(timedMap.size).toEqual(0));
+    test('returns size', () => {
+      jest.useFakeTimers();
+      timedMap
+        .set('first', 'first-value', 100)
+        .set('second', 'second-value', 300)
+        .set('third', 'third-value', 200);
+      jest.advanceTimersByTime(50);
+      expect(timedMap.size).toEqual(3);
+    });
+    test('returns number, after a few expires', () => {
+      jest.useFakeTimers();
+      timedMap
+        .set('first', 'first-value', 100)
+        .set('second', 'second-value', 300)
+        .set('third', 'third-value', 200);
+      jest.advanceTimersByTime(100);
+      expect(timedMap.size).toEqual(2);
+    });
+    test('returns 0 after all expire', () => {
+      jest.useFakeTimers();
+      timedMap
+        .set('first', 'first-value', 100)
+        .set('second', 'second-value', 300)
+        .set('third', 'third-value', 200);
+      jest.advanceTimersByTime(2000);
+      expect(timedMap.size).toEqual(0);
+    });
   });
   describe('clear', () => {
     test.todo('exists');
@@ -127,7 +153,7 @@ describe('Es6TimedMap', () => {
     // TODO:
   });
   describe('onExpire', () => {
-    test('exists', () => {
+    test('does not exist', () => {
       expect(timedMap.onExpire).toBeNull();
     });
     test('returns the item on expiration', () => {
