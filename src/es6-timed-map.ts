@@ -1,3 +1,10 @@
+type TimeoutID = NodeJS.Timeout | number;
+type Timeout<K, V> = [
+  id: TimeoutID,
+  ms: number,
+  callback: ((key: K, value: V) => void) | undefined
+];
+
 /**
  * @name Es6TimedMap
  * An es6-map-like utility class with time based functions and support
@@ -16,7 +23,7 @@ export default class Es6TimedMap<K, V> {
    * to the `_core` map.
    * TODO: update timer type, might be wrong or to generic
    */
-  private _timers = new Map<K, NodeJS.Timeout | number>();
+  private _timers = new Map<K, Timeout<K, V>>();
   constructor(_entries?: readonly [K, V] | null) {
     // TODO: remove any call!
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,15 +55,16 @@ export default class Es6TimedMap<K, V> {
     expirationCallback?: (key: K, value: V) => void
   ): Es6TimedMap<K, V> {
     this._core.set(key, value);
-    this._timers.set(
-      key,
+    this._timers.set(key, [
       setTimeout(() => {
         if (expirationCallback) expirationCallback(key, value);
         if (this.onExpire) this.onExpire(key, value);
         this._core.delete(key);
         this._timers.delete(key);
-      }, expirationTime)
-    );
+      }, expirationTime),
+      expirationTime,
+      expirationCallback
+    ]);
     return this;
   }
 
@@ -67,7 +75,7 @@ export default class Es6TimedMap<K, V> {
    */
   public clear(): void {
     this._core.clear();
-    Array.from(this._timers.values()).forEach((handler) =>
+    Array.from(this._timers.values()).forEach(([handler]) =>
       clearTimeout(handler as NodeJS.Timeout)
     );
     this._timers.clear();
@@ -143,6 +151,23 @@ export default class Es6TimedMap<K, V> {
    * Event handler triggered whenever an item from the map is expired
    */
   public onExpire: ((key: K, value: V) => void) | null = null;
+
+  /**
+   * Resets a timer or updates its expiration time
+   * @param newtime time to set the timer to
+   */
+  public touch(key: K, newtime?: number): boolean {
+    const timer = this._timers.get(key);
+    const value = this._core.get(key);
+    if (!(timer && value)) {
+      return false;
+    }
+    const expirationTime = newtime || timer[1];
+    clearInterval(timer[0] as NodeJS.Timeout);
+    this.delete(key);
+    this.set(key, value, expirationTime, timer[2]);
+    return true;
+  }
 
   // TODO: Add time specific methods
   // - timers - list of timers
