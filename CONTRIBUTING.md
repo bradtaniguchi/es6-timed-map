@@ -51,8 +51,6 @@ Anyone can currently do the following:
 
 Direct contributions to the code **require opening an issue first to discuss the feature**, since the project is still a work in progress.
 
-All pull requests and contributions must comply with the [Developer Certificate of Origin](https://developercertificate.org/).
-
 ## Linting the code
 
 To lint the code use the command:
