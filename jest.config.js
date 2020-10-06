@@ -3,5 +3,6 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   errorOnDeprecated: true,
-  notify: true
+  notify: true,
+  coverageReporters: ['json-summary']
 };
