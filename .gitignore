@@ -2,4 +2,5 @@
 /.vscode
 /lib
 .eslintcache
-/coverage
+/coverage/*
+!/coverage/badge.svg
