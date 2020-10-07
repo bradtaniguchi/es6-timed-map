@@ -21,7 +21,7 @@ describe('Es6TimedMap', () => {
     test.todo('returns false if the element expired');
     // TODO:
   });
-  describe.only('size', () => {
+  describe('size', () => {
     test('defaults to 0', () => expect(timedMap.size).toEqual(0));
     test('returns size', () => {
       jest.useFakeTimers();
@@ -58,12 +58,35 @@ describe('Es6TimedMap', () => {
     // TODO:
   });
   describe('get', () => {
-    test.todo('exists');
-    test.todo('returns item');
-    test.todo('does not return item');
-    test.todo('does not return item if past expiration time');
-    test.todo('works with symbols as a key');
-    test.todo('works with objects as a key');
+    test('exists', () => {
+      expect(timedMap.get).toBeTruthy();
+      expect(typeof timedMap.get === 'function').toBeTruthy();
+    });
+    test('returns item', () => {
+      timedMap.set('first', 'first-value', 1000);
+      expect(timedMap.get('first')).toEqual('first-value');
+    });
+    test('does not return item', () => {
+      expect(timedMap.get('first')).toBeFalsy();
+    });
+    test('does not return item if past expiration time', () => {
+      jest.useFakeTimers();
+      timedMap.set('first', 'first-value', 100);
+      jest.advanceTimersByTime(100);
+      expect(timedMap.get('first')).toBeFalsy();
+    });
+    test('works with symbols as a key', () => {
+      const symTimedMap = new Es6TimedMap<symbol, string>();
+      const symKey = Symbol('first');
+      symTimedMap.set(symKey, 'first-value', 1000);
+      expect(symTimedMap.get(symKey)).toEqual('first-value');
+    });
+    test('works with objects as a key', () => {
+      const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
+      const objKey = { thisKey: 'first-key' };
+      objTimedMap.set(objKey, 'first-value', 1000);
+      expect(objTimedMap.get(objKey)).toEqual('first-value');
+    });
     // TODO:
   });
   describe('has', () => {
