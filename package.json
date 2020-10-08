@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint ./src ./tests",
     "test": "jest",
+    "test:coverage": "jest --coverage && make-coverage-badge",
     "build": "tsc",
     "clean": "rimraf ./lib"
   },
@@ -41,6 +42,7 @@
     "husky": "^4.3.0",
     "jest": "^26.5.0",
     "lint-staged": "^10.4.0",
+    "make-coverage-badge": "^1.2.0",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.4.1",
@@ -54,5 +56,6 @@
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",
     "*.{ts,js,css,md}": "prettier --write"
-  }
+  },
+  "dependencies": {}
 }
