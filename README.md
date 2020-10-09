@@ -1,3 +1,8 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.png?v=101)](https://github.com/ellerbrock/typescript-badges/)
+[![HitCount](http://hits.dwyl.com/bradtaniguchi/es6-timed-map.svg)](http://hits.dwyl.com/bradtaniguchi/es6-timed-map)
+[![Hacktoberfest](https://img.shields.io/github/hacktoberfest/2020/badges/shields?label=hacktoberfest%202020)
+
 # es6-timed-map
 
 An es6-map-like utility class with time based functions and support
