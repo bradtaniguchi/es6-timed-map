@@ -4,10 +4,11 @@
   "description": "An es6-map-like utility class with time based functions and support",
   "main": "dist/src/index.js",
   "scripts": {
-    "lint": "npx eslint ./src ./tests",
-    "test": "npx jest",
+    "lint": "eslint ./src ./tests",
+    "test": "jest",
+    "test:coverage": "jest --coverage && make-coverage-badge",
     "build": "tsc",
-    "clean": "npx rimraf ./lib"
+    "clean": "rimraf ./lib"
   },
   "repository": {
     "type": "git",
@@ -33,14 +34,16 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.14",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
     "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
-    "jest": "^26.4.2",
+    "jest": "^26.5.0",
     "lint-staged": "^10.4.0",
+    "make-coverage-badge": "^1.2.0",
     "prettier": "^2.1.2",
-    "pretty-quick": "^3.0.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
@@ -51,6 +54,8 @@
     }
   },
   "lint-staged": {
+    "*.{ts,js}": "eslint --cache --fix",
     "*.{ts,js,css,md}": "prettier --write"
-  }
+  },
+  "dependencies": {}
 }

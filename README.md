@@ -1,3 +1,8 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+[![HitCount](http://hits.dwyl.com/bradtaniguchi/es6-timed-map.svg)](http://hits.dwyl.com/bradtaniguchi/es6-timed-map)
+![Hacktoberfest](https://img.shields.io/github/hacktoberfest/2020/badges/shields?label=hacktoberfest%202020)
+
 # es6-timed-map
 
 An es6-map-like utility class with time based functions and support
@@ -15,7 +20,7 @@ This repo is participating in [hacktoberfest 2020](https://hacktoberfest.digital
 
 This library is **very much a work in progress**, so there are missing features, lacks of tests, missing documentation (like the rest of this repo), and non-intentional design flaws. This library has the main goal of providing a framework to **contribute and learn**, while still building something that should be useful to someone somewhere at sometime. Along with the goal of providing a framework and environment to contribute to open source, this library should allow everyone to get their fair share of hacktoberfest PR's, so use your best judgement so everyone can contribute!
 
-Thank you, keep learing, keep building and happy hacktoberfest! :+1:
+Thank you, keep learning, keep building and happy hacktoberfest! :+1:
 
 ## Installation
 
@@ -36,3 +41,4 @@ See [SECURITY](./SECURITY.md)
 ## License
 
 [MIT](./LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
