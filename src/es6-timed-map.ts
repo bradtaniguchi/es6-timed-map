@@ -171,10 +171,10 @@ export default class Es6TimedMap<K, V> {
   }
 
   /**
-   * Gets the remaining time for a key.
+   * Gets the remaining time for an entry given a key.
    * This is just an estimation - the environment ultimately determines when the removal is executed.
    *
-   * @param key the key of a value in the map
+   * @param key the key of an entry in the map
    *
    * @returns The amount of milliseconds left before the entry is ejected, or `undefined` if the key or timer does not exist
    */
