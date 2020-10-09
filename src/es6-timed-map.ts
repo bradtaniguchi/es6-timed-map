@@ -1,6 +1,7 @@
 type TimeoutID = NodeJS.Timeout | number;
 type Timeout<K, V> = [
   id: TimeoutID,
+  start: number,
   ms: number,
   callback: ((key: K, value: V) => void) | undefined
 ];
@@ -61,6 +62,7 @@ export default class Es6TimedMap<K, V> {
         this._core.delete(key);
         this._timers.delete(key);
       }, expirationTime),
+      Date.now(),
       expirationTime,
       expirationCallback
     ]);
@@ -161,11 +163,29 @@ export default class Es6TimedMap<K, V> {
     if (!(timer && value)) {
       return false;
     }
-    const expirationTime = newtime || timer[1];
+    const expirationTime = newtime || timer[2];
     clearInterval(timer[0] as NodeJS.Timeout);
     this.delete(key);
-    this.set(key, value, expirationTime, timer[2]);
+    this.set(key, value, expirationTime, timer[3]);
     return true;
+  }
+
+  /**
+   * Gets the remaining time for a key.
+   * This is just an estimation - the environment ultimately determines when the removal is executed.
+   *
+   * @param key the key of a value in the map
+   *
+   * @returns The amount of milliseconds left before the entry is ejected, or `undefined` if the key or timer does not exist
+   */
+  public getTimeLeft(key: K): number | undefined {
+    const timer = this._timers.get(key);
+    if (!timer) {
+      return undefined;
+    }
+
+    const expectedExpirationTime = timer[1] + timer[2];
+    return expectedExpirationTime - Date.now();
   }
 
   // TODO: Add time specific methods
