@@ -15,10 +15,19 @@ describe('Es6TimedMap', () => {
       expect(timedMap.delete).toBeTruthy();
       expect(typeof timedMap.delete === 'function').toBeTruthy();
     });
-    test.todo('returns true if item existed and has been removed');
-    test.todo('returns false if the element does not exist');
-    test.todo('returns false if the element expired');
-    test.todo('returns false if the element expired');
+    test('returns true if item existed and has been removed', () => {
+      timedMap.set('foo', 'bar', 1000);
+      expect(timedMap.delete('foo')).toBeTruthy();
+    });
+    test('returns false if the element does not exist', () => {
+      expect(timedMap.delete('foo')).toBeFalsy();
+    });
+    test('returns false if the element expired', () => {
+      jest.useFakeTimers();
+      timedMap.set('foo', 'bar', 1000);
+      jest.advanceTimersByTime(1000);
+      expect(timedMap.delete('foo')).toBeFalsy();
+    });
     // TODO:
   });
   describe('size', () => {
@@ -52,10 +61,16 @@ describe('Es6TimedMap', () => {
     });
   });
   describe('clear', () => {
-    test.todo('exists');
+    test('exists', () => {
+      expect(timedMap.clear).toBeTruthy();
+      expect(typeof timedMap.clear == 'function').toBeTruthy();
+    });
     test.todo('returns map object');
-    test.todo('removes all existing entries');
-    // TODO:
+    test('removes all existing entries', () => {
+      timedMap.set('foo', 'bar', 1000);
+      timedMap.clear();
+      expect(timedMap.size).toEqual(0);
+    });
   });
   describe('get', () => {
     test('exists', () => {
@@ -90,36 +105,93 @@ describe('Es6TimedMap', () => {
     // TODO:
   });
   describe('has', () => {
-    test.todo('exists');
-    test.todo('returns true');
-    test.todo('returns false');
-    test.todo('returns false if past expiration time');
-    test.todo('works with symbols as a key');
-    test.todo('works with objects as a key');
+    test('exists', () => {
+      expect(timedMap.has).toBeTruthy();
+      expect(typeof timedMap.has === 'function').toBeTruthy();
+    });
+    test('returns true', () => {
+      timedMap.set('foo', 'bar', 1000);
+      expect(timedMap.has('foo')).toBeTruthy();
+    });
+    test('returns false', () => {
+      expect(timedMap.has('baz')).toBeFalsy();
+    });
+    test('returns false if past expiration time', () => {
+      jest.useFakeTimers();
+      timedMap.set('foo', 'bar', 1000);
+
+      jest.advanceTimersByTime(1000);
+      expect(timedMap.has('foo')).toBeFalsy();
+    });
+    test('works with symbols as a key', () => {
+      const symTimedMap = new Es6TimedMap<symbol, string>();
+      const symKey = Symbol('foo');
+
+      symTimedMap.set(symKey, 'bar', 1000);
+      expect(symTimedMap.has(symKey)).toBeTruthy();
+    });
+    test('works with objects as a key', () => {
+      const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
+      const objKey = { thisKey: 'first-key' };
+
+      objTimedMap.set(objKey, 'bar', 1000);
+      expect(objTimedMap.has(objKey)).toBeTruthy();
+    });
   });
   describe('set', () => {
-    test.todo('exists');
+    test('exists', () => {
+      expect(timedMap.set).toBeTruthy();
+      expect(typeof timedMap.set === 'function').toBeTruthy();
+    });
     test.todo('returns map object');
-    test.todo('works with symbols as a key');
-    test.todo('works with objects as a key');
+    test('works with symbols as a key', () => {
+      const symTimedMap = new Es6TimedMap<symbol, string>();
+      const symKey = Symbol('first');
+      symTimedMap.set(symKey, 'first-value', 1000);
+      expect(symTimedMap.get(symKey)).toEqual('first-value');
+    });
+    test('works with objects as a key', () => {
+      const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
+      const objKey = { thisKey: 'first-key' };
+      objTimedMap.set(objKey, 'first-value', 1000);
+      expect(objTimedMap.get(objKey)).toEqual('first-value');
+    });
     // TODO:
   });
   // iteration methods
   describe('keys', () => {
-    test.todo('exists');
+    test('exists', () => {
+      expect(timedMap.keys).toBeTruthy();
+      expect(typeof timedMap.keys === 'function').toBeTruthy();
+    });
     test.todo('returns keys in insertion order');
   });
   describe('values', () => {
-    test.todo('exists');
+    test('exists', () => {
+      expect(timedMap.values).toBeTruthy();
+      expect(typeof timedMap.values === 'function').toBeTruthy();
+    });
     test.todo('returns values in insertion order');
   });
   describe('entries', () => {
-    test.todo('exists');
+    test('exists', () => {
+      expect(timedMap.entries).toBeTruthy();
+      expect(typeof timedMap.entries === 'function').toBeTruthy();
+    });
     test.todo('returns entries in insertion order');
   });
   describe('forEach', () => {
-    test.todo('exists');
-    test.todo('applies this');
+    test('exists', () => {
+      expect(timedMap.forEach).toBeTruthy();
+      expect(typeof timedMap.forEach === 'function').toBeTruthy();
+    });
+    test('applies this', () => {
+      const thatMap = new Es6TimedMap<string, string>();
+      timedMap.set('foo', 'bar', 1000);
+      timedMap.forEach((key, value, map) => {
+        expect(map).toEqual(thatMap);
+      }, thatMap);
+    });
     test.todo('can be used to iterate');
   });
   describe('supports iteration', () => {
