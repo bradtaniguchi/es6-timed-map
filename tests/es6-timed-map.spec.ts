@@ -89,6 +89,37 @@ describe('Es6TimedMap', () => {
     });
     // TODO:
   });
+  describe('getTimeLeft', () => {
+    let nativeDateNow: () => number;
+
+    beforeEach(() => {
+      nativeDateNow = Date.now;
+      Date.now = jest.fn(() => 0);
+    });
+
+    afterEach(() => {
+      Date.now = nativeDateNow;
+    });
+
+    test('returns undefined if timer does not exist', () => {
+      const timeLeft = timedMap.getTimeLeft('fake-key');
+      expect(timeLeft).toBeUndefined();
+    });
+
+    test('returns the correct time left for a valid key', () => {
+      timedMap.set('first-key', 'first-value', 2000);
+
+      Date.now = jest.fn(() => 1000);
+
+      let timeLeft = timedMap.getTimeLeft('first-key');
+      expect(timeLeft).toEqual(1000);
+
+      Date.now = jest.fn(() => 1500);
+
+      timeLeft = timedMap.getTimeLeft('first-key');
+      expect(timeLeft).toEqual(500);
+    });
+  });
   describe('has', () => {
     test.todo('exists');
     test.todo('returns true');
