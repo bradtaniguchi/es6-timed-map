@@ -154,8 +154,17 @@ describe('Es6TimedMap', () => {
     test.todo('can be used to iterate');
   });
   describe('supports iteration', () => {
-    test.todo('exists');
-    test.todo('can be used to iterate');
+    test('exists', () => {
+      expect(timedMap[Symbol.iterator]).toBeTruthy();
+      expect(typeof timedMap[Symbol.iterator]).toBe('function');
+    });
+    test('can be used to iterate', () => {
+      timedMap.set('foo', 'bar', 1000);
+      for (const [key, value] of timedMap) {
+        expect(key).toBe('foo');
+        expect(value).toBe('bar');
+      }
+    });
   });
 
   // "time" based functions

@@ -188,6 +188,9 @@ export default class Es6TimedMap<K, V> {
     return expectedExpirationTime - Date.now();
   }
 
+  public [Symbol.iterator](): IterableIterator<[K, V]> {
+    return this._core[Symbol.iterator]();
+  }
   // TODO: Add time specific methods
   // - timers - list of timers
   // - onExpire - called on expiration of an element
