@@ -88,7 +88,14 @@ export default class Es6TimedMap<K, V> {
    * @param key the key to remove
    */
   public delete(key: K): boolean {
-    // TODO: Remove timer
+    const timer = this._timers.get(key);
+
+    if (timer) {
+      const [handler] = timer;
+      clearTimeout(handler as NodeJS.Timeout);
+      this._timers.delete(key);
+    }
+
     return this._core.delete(key);
   }
 
