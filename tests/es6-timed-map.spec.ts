@@ -169,12 +169,35 @@ describe('Es6TimedMap', () => {
 
   // "time" based functions
   describe('timers', () => {
-    test.todo('exists');
-    test.todo('returns timers in insertion order');
-    test.todo('returns timers in expiration order');
-    test.todo('returns timers in expiration order');
+    beforeEach(() => {
+      jest.useFakeTimers();
+      timedMap.set('first', 'first-value', 1000);
+      timedMap.set('second', 'second-value', 50);
+      timedMap.set('third', 'third-value', 200);
+    });
+    test('exists', () => {
+      expect(timedMap.timers).toBeTruthy();
+      expect(typeof timedMap.timers === 'function').toBeTruthy();
+    });
+    test('returns timers in insertion order', () => {
+      const timers = timedMap.timers();
+      expect(timers.next().value[0]).toEqual('first');
+      expect(timers.next().value[0]).toEqual('second');
+      expect(timers.next().value[0]).toEqual('third');
+    });
+    test('returns timers in expiration order with arguments', () => {
+      const timers1 = timedMap.timers('expiration');
+      expect(timers1.next().value[0]).toEqual('second');
+      expect(timers1.next().value[0]).toEqual('third');
+      expect(timers1.next().value[0]).toEqual('first');
+      const timers2 = timedMap.timers(1);
+      expect(timers2.next().value[0]).toEqual('second');
+      expect(timers2.next().value[0]).toEqual('third');
+      expect(timers2.next().value[0]).toEqual('first');
+    });
     // TODO:
   });
+
   describe('touch', () => {
     test('exists', () => {
       expect(timedMap.touch).toBeTruthy();
