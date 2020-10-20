@@ -191,8 +191,27 @@ export default class Es6TimedMap<K, V> {
   public [Symbol.iterator](): IterableIterator<[K, V]> {
     return this._core[Symbol.iterator]();
   }
+
+  /**
+   * Gets a list of remaining timers.
+   *
+   * @param order sort key to determine order of timers.  Defaults to insertion order.
+   *
+   * @returns A list of remaining timers sorted using order
+   */
+
+  public timers(
+    order?: 'insertion' | 'expiration' | number
+  ): IterableIterator<[K, Timeout<K, V>]> {
+    if (order === 'expiration' || order === 1) {
+      const timers = new Map(
+        [...this._timers.entries()].sort((a, b) => a[1][2] - b[1][2])
+      );
+      return timers.entries();
+    }
+    return this._timers.entries();
+  }
   // TODO: Add time specific methods
-  // - timers - list of timers
   // - onExpire - called on expiration of an element
   // - touch - update an existing timer with the given time
 }
