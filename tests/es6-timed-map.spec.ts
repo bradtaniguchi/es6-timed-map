@@ -15,11 +15,24 @@ describe('Es6TimedMap', () => {
       expect(timedMap.delete).toBeTruthy();
       expect(typeof timedMap.delete === 'function').toBeTruthy();
     });
-    test.todo('returns true if item existed and has been removed');
-    test.todo('returns false if the element does not exist');
-    test.todo('returns false if the element expired');
-    test.todo('returns false if the element expired');
+    test('returns true if item existed and has been removed', () => {
+      jest.useFakeTimers();
+      timedMap.set('first', 'first-value', 1000);
+      expect(timedMap.get('first')).toEqual('first-value');
+      timedMap.delete('first');
+      expect(timedMap.get('first')).toBeFalsy();
+    });
+    test('returns false if the element does not exist', () => {
+      expect(timedMap.delete('nonexistant')).toBeFalsy();
+    });
+    test('returns false if the element expired', () => {
+      jest.useFakeTimers();
+      timedMap.set('first', 'first-value', 50);
+      jest.advanceTimersByTime(50);
+      expect(timedMap.delete('first')).toBeFalsy();
+    });
     // TODO:
+    test.todo('returns list of timers with deleted item timer omitted');
   });
   describe('size', () => {
     test('defaults to 0', () => expect(timedMap.size).toEqual(0));
