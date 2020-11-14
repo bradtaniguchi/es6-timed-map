@@ -8,7 +8,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage && make-coverage-badge",
     "build": "tsc",
-    "clean": "rimraf ./lib"
+    "clean": "rimraf ./lib",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "es6-timed-map.js",
     "es6-timed-map.d.ts"
   ],
+  "types": "dist/src/index.d.ts",
   "author": "Brad Taniguchi",
   "license": "MIT",
   "devDependencies": {
