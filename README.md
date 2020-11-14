@@ -1,7 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![HitCount](http://hits.dwyl.com/bradtaniguchi/es6-timed-map.svg)](http://hits.dwyl.com/bradtaniguchi/es6-timed-map)
-![Hacktoberfest](https://img.shields.io/github/hacktoberfest/2020/badges/shields?label=hacktoberfest%202020)
 
 # es6-timed-map
 
@@ -13,7 +12,6 @@ An es6-map-like utility class with time based functions and support
 
 This class provides a similar interface as the [es6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), however
 this also provides "timed" based functionality to automatically remove older entries.
-
 
 ## Installation
 
