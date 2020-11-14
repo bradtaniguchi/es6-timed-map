@@ -2,7 +2,7 @@
   "name": "es6-timed-map",
   "version": "0.0.1",
   "description": "An es6-map-like utility class with time based functions and support",
-  "main": "dist/src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint ./src ./tests",
     "test": "jest",
@@ -26,10 +26,10 @@
     "cache"
   ],
   "files": [
-    "index.js",
-    "index.d.ts",
-    "es6-timed-map.js",
-    "es6-timed-map.d.ts"
+    "lib/index.js",
+    "lib/index.d.ts",
+    "lib/es6-timed-map.js",
+    "lib/es6-timed-map.d.ts"
   ],
   "types": "dist/src/index.d.ts",
   "author": "Brad Taniguchi",
