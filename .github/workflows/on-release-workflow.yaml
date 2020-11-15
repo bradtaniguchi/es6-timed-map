@@ -1,5 +1,9 @@
 name: on-release-workflow
-on: [release]
+on:
+  # run on push of tag
+  push:
+    tags:
+      - '*.*'
 
 jobs:
   publish-to-npm:
