@@ -1,15 +1,9 @@
-name: on-push-workflow
-on:
-  # run on push, but not on tag release
-  push:
-    branches:
-      - '**'
-    tags-ignore:
-      - '*.*'
+name: on-release-workflow
+on: [release]
 
 jobs:
-  lint-test-build:
-    name: lint test and build
+  publish-to-npm:
+    name: publish to npm
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,6 +20,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          # Specifies the registry, this field is required!
+          registry-url: https://registry.npmjs.org/
 
       - name: install deps
         run: npm ci
@@ -38,3 +34,8 @@ jobs:
 
       - name: build
         run: npm run build
+
+      - name: publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
