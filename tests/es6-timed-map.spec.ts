@@ -1,4 +1,4 @@
-import Es6TimedMap from '../src/es6-timed-map';
+import Es6TimedMap from '../src';
 
 describe('Es6TimedMap', () => {
   let timedMap: Es6TimedMap<string, string>;
