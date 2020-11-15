@@ -47,5 +47,6 @@ jobs:
           # Specifies the registry, this field is required!
           registry-url: https://registry.npmjs.org/
       - name: publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
