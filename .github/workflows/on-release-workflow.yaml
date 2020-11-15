@@ -33,7 +33,7 @@ jobs:
         run: npm run build
 
       # publish to npm
-      - name: publish
+      - name: publish to npm
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
@@ -43,6 +43,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
 
       # publish to github packages
-      - run: npm publish
+      - name: publish to github
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
