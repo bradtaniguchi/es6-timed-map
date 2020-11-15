@@ -10,20 +10,14 @@ jobs:
     name: publish to npm
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        # Supporting node versions mentioned here:
-        # https://nodejs.org/en/about/releases/
-        node-version: [14.x, 12.x, 10.x]
-
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: setup node v${{ matrix.node-version }}
+      - name: setup node v14
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '14'
           # Specifies the registry, this field is required!
           registry-url: https://registry.npmjs.org/
 
