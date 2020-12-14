@@ -100,7 +100,6 @@ describe('Es6TimedMap', () => {
       objTimedMap.set(objKey, 'first-value', 1000);
       expect(objTimedMap.get(objKey)).toEqual('first-value');
     });
-    // TODO:
   });
   describe('getTimeLeft', () => {
     let nativeDateNow: () => number;
