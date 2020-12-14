@@ -67,6 +67,12 @@ To run tests just use the command:
 npm run test
 ```
 
+to keep tests in "watch" mode pass the flag `watch`:
+
+```bash
+npm run test -- --watch
+```
+
 ## Building code
 
 To build the code use the command:
