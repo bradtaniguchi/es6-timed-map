@@ -134,12 +134,34 @@ describe('Es6TimedMap', () => {
     });
   });
   describe('has', () => {
-    test.todo('exists');
-    test.todo('returns true');
-    test.todo('returns false');
-    test.todo('returns false if past expiration time');
-    test.todo('works with symbols as a key');
-    test.todo('works with objects as a key');
+    test('exists', () => {
+      expect(timedMap.has).toBeTruthy();
+      expect(typeof timedMap.has === 'function').toBeTruthy();
+    });
+    test('returns true', () => {
+      timedMap.set('first', 'first-value', 1000);
+      expect(timedMap.has('first')).toEqual(true);
+    });
+    test('returns false', () => {
+      expect(timedMap.has('other')).toEqual(false);
+    });
+    test('returns false if past expiration time', () => {
+      timedMap.set('first', 'first-value', 1000);
+      jest.advanceTimersByTime(1001);
+      expect(timedMap.has('first')).toEqual(false);
+    });
+    test('works with symbols as a key', () => {
+      const symTimedMap = new Es6TimedMap<symbol, string>();
+      const symKey = Symbol('first');
+      symTimedMap.set(symKey, 'first-value', 1000);
+      expect(symTimedMap.has(symKey)).toEqual(true);
+    });
+    test('works with objects as a key', () => {
+      const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
+      const objKey = { thisKey: 'first-key' };
+      objTimedMap.set(objKey, 'first-value', 1000);
+      expect(objTimedMap.has(objKey)).toEqual(true);
+    });
   });
   describe('set', () => {
     test.todo('exists');
