@@ -65,10 +65,17 @@ describe('Es6TimedMap', () => {
     });
   });
   describe('clear', () => {
-    test.todo('exists');
-    test.todo('returns map object');
-    test.todo('removes all existing entries');
-    // TODO:
+    test('exists', () => {
+      expect(timedMap.clear).toBeTruthy();
+      expect(typeof timedMap.clear === 'function').toBeTruthy();
+    });
+    test('removes all existing entries', () => {
+      timedMap.set('first', 'first-value', 1000);
+      timedMap.set('two', 'two-value', 1000);
+      timedMap.clear();
+      expect(timedMap.get('first')).toEqual(undefined);
+      expect(timedMap.get('two')).toEqual(undefined);
+    });
   });
   describe('get', () => {
     test('exists', () => {

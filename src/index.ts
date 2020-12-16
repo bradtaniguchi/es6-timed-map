@@ -65,7 +65,6 @@ class Es6TimedMap<K, V> {
   /**
    * Removes all key-value pairs from the `TimedMap` object.
    * TODO: Add flag if we are to trigger expiration callback
-   * TODO: verify types for handler
    */
   public clear(): void {
     this._core.clear();
