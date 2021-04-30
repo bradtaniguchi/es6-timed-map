@@ -4,5 +4,10 @@ module.exports = {
   verbose: true,
   errorOnDeprecated: true,
   notify: true,
-  coverageReporters: ['json-summary']
+  coverageReporters: ['json-summary'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.spec.json'
+    }
+  }
 };
