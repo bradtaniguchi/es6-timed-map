@@ -81,6 +81,21 @@ To build the code use the command:
 npm run build
 ```
 
+## Testing against local sandbox
+
+After building the library, to test it run `npm link es6-timed-map` ([see](https://docs.npmjs.com/cli/v7/commands/npm-link)).
+
+### nodejs
+
+Currently, to manually check go into the `sandbox/nodejs` folder and run the `sandbox.js` file by running `npm start`. it should print out the following output:
+
+```
+first-value
+second-value
+```
+
+Other tests will be added, and these instructions may change and be updated.
+
 ## Note about CI
 
 Currently there isn't any CI/CID setup, but in the future it will automatically
