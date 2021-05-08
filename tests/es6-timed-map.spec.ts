@@ -190,9 +190,47 @@ describe('Es6TimedMap', () => {
     test.todo('returns entries in insertion order');
   });
   describe('forEach', () => {
-    test.todo('exists');
-    test.todo('applies this');
-    test.todo('can be used to iterate');
+    test('exists', () => {
+      expect(timedMap.forEach).toBeTruthy();
+      expect(typeof timedMap.forEach === 'function').toBeTruthy();
+    });
+    test('applies this', () => {
+      timedMap
+        .set('first', 'first-value', 100)
+        .set('second', 'second-value', 300)
+        .set('third', 'third-value', 200);
+      // **note** I get a weird eslint issue warning here without disable
+      // eslint-disable-next-line prettier/prettier
+      timedMap.forEach((value, key, self) => {
+        // only check for this reference
+        expect(self === timedMap).toEqual(true);
+      }, timedMap);
+    });
+    test('can be used to iterate', () => {
+      timedMap
+        .set('first', 'first-value', 100)
+        .set('second', 'second-value', 300)
+        .set('third', 'third-value', 200);
+      const results: Array<{
+        key: string;
+        value: string;
+      }> = [];
+      timedMap.forEach((value, key) => results.push({ key, value }));
+      expect(results).toEqual([
+        {
+          key: 'first',
+          value: 'first-value'
+        },
+        {
+          key: 'second',
+          value: 'second-value'
+        },
+        {
+          key: 'third',
+          value: 'third-value'
+        }
+      ]);
+    });
   });
   describe('supports iteration', () => {
     test('exists', () => {
