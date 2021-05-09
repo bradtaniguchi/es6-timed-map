@@ -170,11 +170,30 @@ describe('Es6TimedMap', () => {
     });
   });
   describe('set', () => {
-    test.todo('exists');
-    test.todo('returns map object');
-    test.todo('works with symbols as a key');
-    test.todo('works with objects as a key');
-    // TODO:
+    test('exists', () => {
+      expect(timedMap.set).toBeTruthy();
+      expect(typeof timedMap.has === 'function').toBeTruthy();
+    });
+    test('returns map object, to support chaining', () => {
+      expect(timedMap.set('first-key', 'first-value', 100)).toEqual(timedMap);
+    });
+    // **note** this isn't supported yet, as its too new with TS 4.2
+    test('works with symbols as a key', () => {
+      const symbolTimedMap = new Es6TimedMap<symbol, string>();
+      const mySymbol = Symbol('mine');
+      symbolTimedMap.set(mySymbol, 'symbol-value', 100);
+      expect(symbolTimedMap.has(mySymbol)).toBeTruthy();
+      jest.advanceTimersByTime(500);
+      expect(symbolTimedMap.has(mySymbol)).toBeFalsy();
+    });
+    test('works with objects as a key', () => {
+      const objTimedMap = new Es6TimedMap<Record<string, unknown>, string>();
+      const myObj = {};
+      objTimedMap.set(myObj, 'first-value', 500);
+      expect(objTimedMap.get(myObj)).toEqual('first-value');
+      jest.advanceTimersByTime(500);
+      expect(objTimedMap.get(myObj)).toBeFalsy();
+    });
   });
   // iteration methods
   describe('keys', () => {
