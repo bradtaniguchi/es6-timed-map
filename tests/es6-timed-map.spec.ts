@@ -197,8 +197,23 @@ describe('Es6TimedMap', () => {
   });
   // iteration methods
   describe('keys', () => {
-    test.todo('exists');
-    test.todo('returns keys in insertion order');
+    test('exists', () => {
+      expect(timedMap.keys).toBeTruthy();
+      expect(typeof timedMap.keys === 'function').toBeTruthy();
+    });
+    test('returns an iterator function', () => {
+      expect(typeof timedMap.keys()[Symbol.iterator]).toEqual('function');
+    });
+    test('returns keys in insertion order', () => {
+      timedMap
+        .set('first-key', 'some-value', 1000)
+        .set('second-key', 'some-value', 500);
+
+      expect(Array.from(timedMap.keys())).toEqual(['first-key', 'second-key']);
+    });
+    test('returns empty array when nothing is added yet', () => {
+      expect(Array.from(timedMap.keys())).toEqual([]);
+    });
   });
   describe('values', () => {
     test.todo('exists');
