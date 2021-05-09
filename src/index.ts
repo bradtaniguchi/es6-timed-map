@@ -126,10 +126,8 @@ class Es6TimedMap<K, V> {
    * Returns a new `Iterator` object that containers **an array of [key, value]**
    * for each element in the `Map` object in insertion order.
    *
-   * TODO: Check type data
-   * TODO: Add support to return data
    */
-  public entries(): Iterator<[K, V]> {
+  public entries(): IterableIterator<[K, V]> {
     return this._core.entries();
   }
   /**
