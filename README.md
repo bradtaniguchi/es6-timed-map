@@ -22,6 +22,13 @@ This library is available on npm:
 npm install es6-timed-map
 ```
 
+Supports multiple bundles automatically using [microbundle](https://github.com/developit/microbundle):
+
+- esm
+- cjs
+- umd
+  and include maps.
+
 ## Usage
 
 Here is a basic example of using this library (more examples will be on the way)
