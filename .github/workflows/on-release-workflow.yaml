@@ -9,6 +9,9 @@ jobs:
   publish-to-npm:
     name: publish to npm
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: checkout repo
