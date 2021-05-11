@@ -46,6 +46,7 @@ jobs:
         with:
           node-version: '14'
           registry-url: 'https://npm.pkg.github.com'
+          scope: '@bradtaniguchi'
 
       # publish to github packages
       - name: publish to github
