@@ -1,7 +1,6 @@
 [![npm version](https://badge.fury.io/js/es6-timed-map.svg)](https://badge.fury.io/js/es6-timed-map)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
-[![HitCount](http://hits.dwyl.com/bradtaniguchi/es6-timed-map.svg)](http://hits.dwyl.com/bradtaniguchi/es6-timed-map)
 
 # es6-timed-map
 
