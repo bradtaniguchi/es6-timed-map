@@ -37,7 +37,7 @@ jobs:
 
       # publish to npm
       - name: publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
@@ -46,7 +46,6 @@ jobs:
         with:
           node-version: '14'
           registry-url: 'https://npm.pkg.github.com'
-          scope: 'bradtaniguchi'
 
       # publish to github packages
       - name: publish to github
