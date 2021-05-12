@@ -34,19 +34,20 @@ jobs:
 
       # publish to npm
       - name: publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
-      - name: setup node v14, for github
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: 'bradtaniguchi'
+      # I couldn't get this to work :/
+      # - name: setup node v14, for github
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '14'
+      #     registry-url: 'https://npm.pkg.github.com'
+      #     scope: '@bradtaniguchi'
 
-      # publish to github packages
-      - name: publish to github
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # # publish to github packages
+      # - name: publish to github
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
