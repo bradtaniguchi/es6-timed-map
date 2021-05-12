@@ -223,5 +223,4 @@ namespace Es6TimedMap {
     callback: ((key: K, value: V) => void) | undefined
   ];
 }
-
-export = Es6TimedMap;
+export default Es6TimedMap;
