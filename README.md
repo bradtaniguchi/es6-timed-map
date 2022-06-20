@@ -8,8 +8,6 @@
 
 An es6-map-like utility class with time based functions and support
 
-<!-- TODO: add TOC -->
-
 ## Summary
 
 This class provides a similar interface as the [es6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), however
@@ -46,9 +44,8 @@ See [CONTRIBUTING](./CONTRIBUTING.md) and review the [CODE_OF_CONDUCT](./CODE_OF
 
 ## Reference
 
-TBD....
-
-<!-- TODO: add github action to automate this? -->
+See the typedocs based doc site:
+https://bradtaniguchi.dev/es6-timed-map
 
 ## Security
 
