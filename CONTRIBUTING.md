@@ -70,6 +70,20 @@ npm run build
 
 After building the library, to test it run `npm link es6-timed-map` ([see](https://docs.npmjs.com/cli/v7/commands/npm-link)).
 
+## Building docs
+
+Docs are managed by [typedoc](https://typedoc.org/) and can be built using the following:
+
+```bash
+npm run build:docs
+```
+
+Then they can be viewed via http-server with:
+
+```bash
+npm run serve:docs
+```
+
 ### nodejs
 
 Currently, to manually check go into the `sandbox/nodejs` folder and run the `sandbox.js` file by running `npm start`. it should print out the following output:
