@@ -96,10 +96,15 @@ second-value
 
 Other tests will be added, and these instructions may change and be updated.
 
-## Note about CI
+## Release steps
 
-Currently there isn't any CI/CID setup, but in the future it will automatically
-be ran automatically on open PRs
+The following steps are primarily taken by maintainers, and are provided more as memory refreshers than
+steps available to all contributors.
+
+1. Create a version via `npm version <major|minor|patch>`
+2. Push to the repo, including tags `git push origin master/main --tags`
+3. Create a release via github see [docs](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+4. This should trigger the `on-release` workflow that will release the code to npm. (and github if we ever figure that out)
 
 ## External Resources
 
