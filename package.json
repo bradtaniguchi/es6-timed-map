@@ -17,7 +17,7 @@
     "build": "tsc",
     "build:docs": "npx typedoc --options typedoc.json",
     "serve:docs": "npx http-server ./docs",
-    "clean": "rimraf ./lib",
+    "clean": "rimraf lib docs",
     "prepare": "npm run build"
   },
   "repository": {
