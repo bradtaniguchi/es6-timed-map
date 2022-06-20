@@ -1,3 +1,12 @@
+export type TimeoutID = NodeJS.Timeout | number;
+
+export type Timeout<K, V> = [
+  id: TimeoutID,
+  start: number,
+  ms: number,
+  callback: ((key: K, value: V) => void) | undefined
+];
+
 /**
  * @name Es6TimedMap
  * An es6-map-like utility class with time based functions and support
@@ -6,8 +15,7 @@
  * Due to the similar surface area, use the Map doc reference from here:
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
  */
-class Es6TimedMap<K, V> {
-  public static TEST = 'hi';
+export default class Es6TimedMap<K, V> {
   /**
    * The core map data, used to keep track of the data
    */
@@ -16,7 +24,7 @@ class Es6TimedMap<K, V> {
    * A map of timers where the key is the same key provided
    * to the `_core` map.
    */
-  private _timers = new Map<K, Es6TimedMap.Timeout<K, V>>();
+  private _timers = new Map<K, Timeout<K, V>>();
   constructor(_entries?: readonly [K, V] | null) {
     // TODO: remove any call!
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -199,7 +207,7 @@ class Es6TimedMap<K, V> {
 
   public timers(
     order?: 'insertion' | 'expiration' | number
-  ): IterableIterator<[K, Es6TimedMap.Timeout<K, V>]> {
+  ): IterableIterator<[K, Timeout<K, V>]> {
     if (order === 'expiration' || order === 1) {
       const timers = new Map(
         [...this._timers.entries()].sort((a, b) => a[1][2] - b[1][2])
@@ -213,15 +221,4 @@ class Es6TimedMap<K, V> {
   // - touch - update an existing timer with the given time
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-namespace Es6TimedMap {
-  export type TimeoutID = NodeJS.Timeout | number;
-  export type Timeout<K, V> = [
-    id: TimeoutID,
-    start: number,
-    ms: number,
-    callback: ((key: K, value: V) => void) | undefined
-  ];
-}
-
-export = Es6TimedMap;
+module.exports = Es6TimedMap;
