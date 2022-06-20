@@ -3,3 +3,4 @@
 .eslintcache
 /coverage/*
 !/coverage/badge.svg
+/docs
