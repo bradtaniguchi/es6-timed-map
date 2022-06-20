@@ -59,4 +59,3 @@ This repo participated in [hacktoberfest 2020](https://hacktoberfest.digitalocea
 ## License
 
 [MIT](./LICENSE)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
