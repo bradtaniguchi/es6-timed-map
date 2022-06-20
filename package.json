@@ -1,6 +1,6 @@
 {
   "name": "es6-timed-map",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An es6-map-like utility class with time based functions and support",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
