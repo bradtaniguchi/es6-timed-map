@@ -1,20 +1,5 @@
 # Contributing
 
-## Contents
-
-<!-- toc -->
-
-- [Installation](#installation)
-- [Summary](#summary)
-- [Linting the code](#linting-the-code)
-- [Running tests](#running-tests)
-- [Building code](#building-code)
-- [Note about CI](#note-about-ci)
-- [External Resources](#external-resources)
-- [Have Questions?](#have-questions)
-
-<!-- tocstop -->
-
 ## Installation
 
 Clone the repository.
