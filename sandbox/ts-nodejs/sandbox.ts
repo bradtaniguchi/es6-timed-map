@@ -1,9 +1,5 @@
-const TimedMap = require('es6-timed-map');
+import TimedMap from 'es6-timed-map';
 
-console.log('test ', {
-  TimedMap,
-  type: typeof TimedMap
-});
 const timedMap = new TimedMap();
 
 timedMap.set('firstKey', 'first-value', 100);

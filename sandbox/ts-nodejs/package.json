@@ -2,9 +2,8 @@
   "name": "es6-timed-map-sandbox",
   "version": "0.0.0",
   "private": "true",
-  "main": "sandbox.js",
   "scripts": {
-    "start": "node sandbox.js"
+    "start": "ts-node sandbox.ts"
   },
   "dependencies": {
     "es6-timed-map": "latest"

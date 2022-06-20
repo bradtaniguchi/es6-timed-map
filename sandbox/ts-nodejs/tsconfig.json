@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "CommonJS",
+    "declaration": true,
+    "declarationMap": false,
+    "esModuleInterop": true,
+    "outDir": "./lib-sandbox",
+    "downlevelIteration": true,
+    "strict": true
+  },
+  "include": ["sandbox.ts"]
+}
