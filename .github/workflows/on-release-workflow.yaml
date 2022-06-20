@@ -1,9 +1,7 @@
 name: on-release-workflow
 on:
-  # run on push of tag
-  push:
-    tags:
-      - '*.*'
+  release:
+    types: [created]
 
 jobs:
   publish-to-npm:
@@ -37,17 +35,3 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-
-      # I couldn't get this to work :/
-      # - name: setup node v14, for github
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '14'
-      #     registry-url: 'https://npm.pkg.github.com'
-      #     scope: '@bradtaniguchi'
-
-      # # publish to github packages
-      # - name: publish to github
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
