@@ -1,0 +1,56 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>es6-timed-map</title><meta name="description" content="Documentation for es6-timed-map"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">es6-timed-map</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>es6-timed-map </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography"><p><a href="https://badge.fury.io/js/es6-timed-map"><img src="https://badge.fury.io/js/es6-timed-map.svg" alt="npm version"></a>
+<a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+<a href="https://github.com/ellerbrock/typescript-badges/"><img src="https://badges.frapsoft.com/typescript/code/typescript.svg?v=101" alt="TypeScript"></a></p>
+<p><a href="https://gitpod.io/#https://github.com/bradtaniguchi/es6-timed-map"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod"></a></p>
+
+<a href="#es6-timed-map" id="es6-timed-map" style="color: inherit; text-decoration: none;">
+  <h1>es6-timed-map</h1>
+</a>
+<p>An es6-map-like utility class with time based functions and support</p>
+
+<a href="#summary" id="summary" style="color: inherit; text-decoration: none;">
+  <h2>Summary</h2>
+</a>
+<p>This class provides a similar interface as the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">es6 Map</a>, however
+this also provides &quot;timed&quot; based functionality to automatically remove older entries.</p>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p>This library is available on npm:</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> </span><span class="hl-0">es6</span><span class="hl-1">-</span><span class="hl-0">timed</span><span class="hl-1">-</span><span class="hl-0">map</span>
+</code></pre>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>Here is a basic example of using this library (more examples will be on the way)</p>
+<pre><code class="language-js"><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-3">TimedMap</span><span class="hl-1"> = </span><span class="hl-4">require</span><span class="hl-1">(</span><span class="hl-5">&#39;es6-timed-map&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-3">timedMap</span><span class="hl-1"> = </span><span class="hl-2">new</span><span class="hl-1"> </span><span class="hl-4">TimedMap</span><span class="hl-1">();</span><br/><br/><span class="hl-0">timedMap</span><span class="hl-1">.</span><span class="hl-4">set</span><span class="hl-1">(</span><span class="hl-5">&#39;firstKey&#39;</span><span class="hl-1">, </span><span class="hl-5">&#39;first-value&#39;</span><span class="hl-1">, </span><span class="hl-6">100</span><span class="hl-1">); </span><span class="hl-7">// save for 100ms</span><br/><span class="hl-0">timedMap</span><span class="hl-1">.</span><span class="hl-4">set</span><span class="hl-1">(</span><span class="hl-5">&#39;secondKey&#39;</span><span class="hl-1">, </span><span class="hl-5">&#39;second-value&#39;</span><span class="hl-1">, </span><span class="hl-6">300</span><span class="hl-1">); </span><span class="hl-7">// save for 300ms</span><br/><br/><span class="hl-7">// wait for 100ms</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-0">timedMap</span><span class="hl-1">.</span><span class="hl-4">get</span><span class="hl-1">(</span><span class="hl-5">&#39;firstKey&#39;</span><span class="hl-1">)); </span><span class="hl-7">// undefined</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">(</span><span class="hl-0">timedMap</span><span class="hl-1">.</span><span class="hl-4">get</span><span class="hl-1">(</span><span class="hl-5">&#39;secondKey&#39;</span><span class="hl-1">)); </span><span class="hl-7">// &#39;second-value&#39;</span>
+</code></pre>
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h2>Contributing</h2>
+</a>
+<p>See <a href="./CONTRIBUTING.md">CONTRIBUTING</a> and review the <a href="./CODE_OF_CONDUCT">CODE_OF_CONDUCT</a>.</p>
+
+<a href="#reference" id="reference" style="color: inherit; text-decoration: none;">
+  <h2>Reference</h2>
+</a>
+<p>See the typedocs based doc site:
+<a href="https://bradtaniguchi.dev/es6-timed-map">https://bradtaniguchi.dev/es6-timed-map</a></p>
+
+<a href="#security" id="security" style="color: inherit; text-decoration: none;">
+  <h2>Security</h2>
+</a>
+<p>See <a href="./SECURITY.md">SECURITY</a></p>
+
+<a href="#hacktoberfest-2020-jack_o_lantern" id="hacktoberfest-2020-jack_o_lantern" style="color: inherit; text-decoration: none;">
+  <h2>Hacktoberfest 2020 :jack_o_lantern:</h2>
+</a>
+<p>This repo participated in <a href="https://hacktoberfest.digitalocean.com/">hacktoberfest 2020</a>, so thank you for all of those that participated, keep learning, keep building and happy hacktoberfest! :+1:</p>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p><a href="./LICENSE">MIT</a></p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/default.html" class="tsd-kind-icon">default</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#Timeout" class="tsd-kind-icon">Timeout</a></li><li class="tsd-kind-type-alias"><a href="modules.html#TimeoutID" class="tsd-kind-icon">TimeoutID</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
