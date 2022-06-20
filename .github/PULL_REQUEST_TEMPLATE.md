@@ -1,12 +1,5 @@
-**What is the purpose of this pull request? (put an "X" next to item)**
+**What changes did you make?**
 
-- [ ] Documentation update
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Other, please explain:
+**Issues closed by this pull request**
 
-**What changes did you make? (Give an overview)**
-
-**Which issue (if any) does this pull request address?**
-
-**Is there anything you'd like reviewers to focus on?**
+Closes #
