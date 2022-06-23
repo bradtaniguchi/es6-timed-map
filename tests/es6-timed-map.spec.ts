@@ -93,6 +93,10 @@ describe('Es6TimedMap', () => {
       expect(timedMap.get('first')).toEqual(undefined);
       expect(timedMap.get('two')).toEqual(undefined);
     });
+    test.todo('triggers expirationCallback');
+    test.todo('triggers onExpire callback');
+    test.todo('throws if value is not found when cross checking timers');
+    test.todo('clears timeout correctly');
   });
 
   describe('get', () => {

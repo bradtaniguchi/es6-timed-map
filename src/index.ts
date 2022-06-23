@@ -89,8 +89,9 @@ export default class Es6TimedMap<Key, Value> {
     this._core.set(key, value);
     this._timers.set(key, [
       setTimeout(() => {
-        if (expirationCallback) expirationCallback(key, value);
-        if (this.onExpire) this.onExpire(key, value);
+        if (typeof expirationCallback === 'function')
+          expirationCallback(key, value);
+        if (typeof this.onExpire === 'function') this.onExpire(key, value);
         this._core.delete(key);
         this._timers.delete(key);
       }, expirationTime),
@@ -103,13 +104,35 @@ export default class Es6TimedMap<Key, Value> {
 
   /**
    * Removes all key-value pairs from the `TimedMap` object.
-   * TODO: Add flag if we are to trigger expiration callback
+   * @params params param object, is optional
+   * @params params.triggerExpirationCallback if we are to trigger the expiration callback
+   *   for all timers.
+   * @params params.triggerOnExpire if we are to trigger the general onExpire callback
    */
-  public clear(): void {
-    this._core.clear();
-    Array.from(this._timers.values()).forEach(([handler]) =>
-      clearTimeout(handler as NodeJS.Timeout)
+  public clear(params?: {
+    triggerExpirationCallback?: boolean;
+    triggerOnExpire?: boolean;
+  }): void {
+    const triggerExpirationCallback = !!params?.triggerExpirationCallback;
+    const triggerOnExpire = !!params?.triggerOnExpire;
+
+    Array.from(this._timers.entries()).forEach(
+      ([key, [timeout, , , expirationCallback]]) => {
+        const value = this._core.get(key);
+        if (!value) throw new Error('Inconsistent state occured during clear');
+        if (
+          triggerExpirationCallback &&
+          typeof expirationCallback === 'function'
+        )
+          expirationCallback(key, value);
+
+        if (triggerOnExpire && typeof this.onExpire === 'function')
+          this.onExpire(key, value);
+
+        clearTimeout(timeout);
+      }
     );
+    this._core.clear();
     this._timers.clear();
   }
 
