@@ -1,5 +1,13 @@
+/**
+ * Type representing a TimeoutID for a nodejs.timeout timer.
+ * @private
+ */
 export type TimeoutID = NodeJS.Timeout | number;
 
+/**
+ * Data saved for individual _timers.
+ * @private
+ */
 export type Timeout<K, V> = [
   id: TimeoutID,
   start: number,
@@ -8,27 +16,46 @@ export type Timeout<K, V> = [
 ];
 
 /**
- * @name Es6TimedMap
- * An es6-map-like utility class with time based functions and support
- * TODO: add more JSDoc information
- *
- * Due to the similar surface area, use the Map doc reference from here:
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+ * Type representing a the callback signature called when something timesout.
  */
-export default class Es6TimedMap<K, V> {
+export type ExpirationCallback<Key, Value> = (key: Key, value: Value) => void;
+
+/**
+ * @name Es6TimedMap
+ * An es6-map-like utility class with time based functions and support.
+ *
+ * Due to the similar surface area, use the Map doc reference from [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+ */
+export default class Es6TimedMap<Key, Value> {
   /**
-   * The core map data, used to keep track of the data
+   * The core map data, used to keep track of the data itself.
+   * @private
    */
-  private _core: Map<K, V>;
+  private _core = new Map<Key, Value>();
+
   /**
    * A map of timers where the key is the same key provided
    * to the `_core` map.
+   * @private
    */
-  private _timers = new Map<K, Timeout<K, V>>();
-  constructor(_entries?: readonly [K, V] | null) {
-    // TODO: remove any call!
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this._core = _entries ? new Map<K, V>(_entries as any) : new Map();
+  private _timers = new Map<Key, Timeout<Key, Value>>();
+
+  /**
+   *
+   * @param _entries list of entires to pre-populate the timed-map with
+   */
+  constructor(
+    _entries?: Array<
+      [Key, Value, number, ExpirationCallback<Key, Value>]
+    > | null
+  ) {
+    if (!_entries) {
+      return;
+    }
+
+    _entries.forEach(([key, value, expirationTime, expirationCallback]) =>
+      this.set(key, value, expirationTime, expirationCallback)
+    );
   }
 
   /**
@@ -45,16 +72,15 @@ export default class Es6TimedMap<K, V> {
    * @param expirationTime the time in milliseconds to keep this element in the map.
    * @param expirationCallback an optional callback to execute once the timer expires
    *
-   * TODO: provide type for expiration callback
    * TODO: verify no memory leaks via stress testing
    * TODO: add alternate call scheme that supports more arguments
    */
   public set(
-    key: K,
-    value: V,
+    key: Key,
+    value: Value,
     expirationTime: number,
-    expirationCallback?: (key: K, value: V) => void
-  ): Es6TimedMap<K, V> {
+    expirationCallback?: ExpirationCallback<Key, Value>
+  ): Es6TimedMap<Key, Value> {
     this._core.set(key, value);
     this._timers.set(key, [
       setTimeout(() => {
@@ -87,7 +113,7 @@ export default class Es6TimedMap<K, V> {
    * or `false` if the element does not exist. `has` will return `false` afterwards.
    * @param key the key to remove
    */
-  public delete(key: K): boolean {
+  public delete(key: Key): boolean {
     const timer = this._timers.get(key);
 
     if (timer) {
@@ -108,8 +134,12 @@ export default class Es6TimedMap<K, V> {
    * TODO: check typing for `thisArg` object
    */
   public forEach(
-    callback: (value: V, key: K, timedMap: Es6TimedMap<K, V>) => void,
-    thisArg?: Es6TimedMap<K, V>
+    callback: (
+      value: Value,
+      key: Key,
+      timedMap: Es6TimedMap<Key, Value>
+    ) => void,
+    thisArg?: Es6TimedMap<Key, Value>
   ): void {
     return this._core.forEach((value, key) =>
       callback(value, key, thisArg || this)
@@ -120,14 +150,14 @@ export default class Es6TimedMap<K, V> {
    * Returns the value at the given key, if there is one
    * @param key the key to get
    */
-  public get(key: K): V | undefined {
+  public get(key: Key): Value | undefined {
     return this._core.get(key);
   }
   /**
    * Returns a boolean asserting whether a value has been associated
    * to the `key` in the `Map` object or not.
    */
-  public has(key: K): boolean {
+  public has(key: Key): boolean {
     return this._core.has(key);
   }
   /**
@@ -135,34 +165,34 @@ export default class Es6TimedMap<K, V> {
    * for each element in the `Map` object in insertion order.
    *
    */
-  public entries(): IterableIterator<[K, V]> {
+  public entries(): IterableIterator<[Key, Value]> {
     return this._core.entries();
   }
   /**
    * Returns a new `Iterator` object that contains the **keys** for each element
    * in the `Map` object in insertion order
    */
-  public keys(): IterableIterator<K> {
+  public keys(): IterableIterator<Key> {
     return this._core.keys();
   }
   /**
    * Returns a new `Iterator` object that contains **values** for each element in the `Map` object in
    * insertion order.
    */
-  public values(): IterableIterator<V> {
+  public values(): IterableIterator<Value> {
     return this._core.values();
   }
 
   /**
    * Event handler triggered whenever an item from the map is expired
    */
-  public onExpire: ((key: K, value: V) => void) | null = null;
+  public onExpire: ((key: Key, value: Value) => void) | null = null;
 
   /**
    * Resets a timer or updates its expiration time
    * @param newtime time to set the timer to
    */
-  public touch(key: K, newtime?: number): boolean {
+  public touch(key: Key, newtime?: number): boolean {
     const timer = this._timers.get(key);
     const value = this._core.get(key);
     if (!(timer && value)) {
@@ -183,7 +213,7 @@ export default class Es6TimedMap<K, V> {
    *
    * @returns The amount of milliseconds left before the entry is ejected, or `undefined` if the key or timer does not exist
    */
-  public getTimeLeft(key: K): number | undefined {
+  public getTimeLeft(key: Key): number | undefined {
     const timer = this._timers.get(key);
     if (!timer) {
       return undefined;
@@ -193,7 +223,7 @@ export default class Es6TimedMap<K, V> {
     return expectedExpirationTime - Date.now();
   }
 
-  public [Symbol.iterator](): IterableIterator<[K, V]> {
+  public [Symbol.iterator](): IterableIterator<[Key, Value]> {
     return this._core[Symbol.iterator]();
   }
 
@@ -207,7 +237,7 @@ export default class Es6TimedMap<K, V> {
 
   public timers(
     order?: 'insertion' | 'expiration' | number
-  ): IterableIterator<[K, Timeout<K, V>]> {
+  ): IterableIterator<[Key, Timeout<Key, Value>]> {
     if (order === 'expiration' || order === 1) {
       const timers = new Map(
         [...this._timers.entries()].sort((a, b) => a[1][2] - b[1][2])
