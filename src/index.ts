@@ -252,7 +252,6 @@ export default class Es6TimedMap<Key, Value> {
     return this._timers.entries();
   }
   // TODO: Add time specific methods
-  // - onExpire - called on expiration of an element
   // - touch - update an existing timer with the given time
 }
 
