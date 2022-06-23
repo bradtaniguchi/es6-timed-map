@@ -6,10 +6,27 @@ describe('Es6TimedMap', () => {
   beforeEach(() => {
     timedMap = new Es6TimedMap();
   });
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
 
   test('can be created', () => expect(new Es6TimedMap()).toBeTruthy());
 
-  // method/api tests for es6-map coverage
+  describe('constructor', () => {
+    test('passed with empty array adds nothing', () => {
+      timedMap = new Es6TimedMap([]);
+      expect(timedMap.size).toEqual(0);
+    });
+    test('passed non-array throws error', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(() => new Es6TimedMap({} as any)).toThrowError();
+    });
+    test('passed with elements', () => {
+      timedMap = new Es6TimedMap<string, string>([['key', 'my value', 100]]);
+      expect(timedMap.size).toEqual(1);
+    });
+  });
+
   describe('delete', () => {
     test('exists', () => {
       expect(timedMap.delete).toBeTruthy();
@@ -31,9 +48,8 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(50);
       expect(timedMap.delete('first')).toBeFalsy();
     });
-    // TODO:
-    test.todo('returns list of timers with deleted item timer omitted');
   });
+
   describe('size', () => {
     test('defaults to 0', () => expect(timedMap.size).toEqual(0));
     test('returns size', () => {
@@ -64,6 +80,7 @@ describe('Es6TimedMap', () => {
       expect(timedMap.size).toEqual(0);
     });
   });
+
   describe('clear', () => {
     test('exists', () => {
       expect(timedMap.clear).toBeTruthy();
@@ -77,6 +94,7 @@ describe('Es6TimedMap', () => {
       expect(timedMap.get('two')).toEqual(undefined);
     });
   });
+
   describe('get', () => {
     test('exists', () => {
       expect(timedMap.get).toBeTruthy();
@@ -108,6 +126,7 @@ describe('Es6TimedMap', () => {
       expect(objTimedMap.get(objKey)).toEqual('first-value');
     });
   });
+
   describe('getTimeLeft', () => {
     let nativeDateNow: () => number;
 
@@ -139,6 +158,7 @@ describe('Es6TimedMap', () => {
       expect(timeLeft).toEqual(500);
     });
   });
+
   describe('has', () => {
     test('exists', () => {
       expect(timedMap.has).toBeTruthy();
@@ -169,6 +189,7 @@ describe('Es6TimedMap', () => {
       expect(objTimedMap.has(objKey)).toEqual(true);
     });
   });
+
   describe('set', () => {
     test('exists', () => {
       expect(timedMap.set).toBeTruthy();
@@ -195,6 +216,7 @@ describe('Es6TimedMap', () => {
       expect(objTimedMap.get(myObj)).toBeFalsy();
     });
   });
+
   // iteration methods
   describe('keys', () => {
     test('exists', () => {
@@ -215,6 +237,7 @@ describe('Es6TimedMap', () => {
       expect(Array.from(timedMap.keys())).toEqual([]);
     });
   });
+
   describe('values', () => {
     test('exists', () => {
       expect(timedMap.values).toBeTruthy();
@@ -237,6 +260,7 @@ describe('Es6TimedMap', () => {
       expect(Array.from(timedMap.values())).toEqual([]);
     });
   });
+
   describe('entries', () => {
     test('exists', () => {
       expect(timedMap.entries).toBeTruthy();
@@ -259,6 +283,7 @@ describe('Es6TimedMap', () => {
       expect(Array.from(timedMap.entries())).toEqual([]);
     });
   });
+
   describe('forEach', () => {
     test('exists', () => {
       expect(timedMap.forEach).toBeTruthy();
@@ -302,6 +327,7 @@ describe('Es6TimedMap', () => {
       ]);
     });
   });
+
   describe('supports iteration', () => {
     test('exists', () => {
       expect(timedMap[Symbol.iterator]).toBeTruthy();
@@ -344,7 +370,6 @@ describe('Es6TimedMap', () => {
       expect(timers2.next().value[0]).toEqual('third');
       expect(timers2.next().value[0]).toEqual('first');
     });
-    // TODO:
   });
 
   describe('touch', () => {
@@ -385,8 +410,8 @@ describe('Es6TimedMap', () => {
     test('fail to update missing key', () => {
       expect(timedMap.touch('foo')).toBeFalsy();
     });
-    // TODO:
   });
+
   describe('onExpire', () => {
     test('does not exist', () => {
       expect(timedMap.onExpire).toBeNull();

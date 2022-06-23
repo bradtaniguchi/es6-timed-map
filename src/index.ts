@@ -46,11 +46,16 @@ export default class Es6TimedMap<Key, Value> {
    */
   constructor(
     _entries?: Array<
-      [Key, Value, number, ExpirationCallback<Key, Value>]
+      | [Key, Value, number, ExpirationCallback<Key, Value>]
+      | [Key, Value, number]
     > | null
   ) {
     if (!_entries) {
       return;
+    }
+
+    if (!Array.isArray(_entries)) {
+      throw new Error('Invalid entries provided');
     }
 
     _entries.forEach(([key, value, expirationTime, expirationCallback]) =>
