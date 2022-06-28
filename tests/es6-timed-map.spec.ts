@@ -93,6 +93,36 @@ describe('Es6TimedMap', () => {
       expect(timedMap.get('first')).toEqual(undefined);
       expect(timedMap.get('two')).toEqual(undefined);
     });
+    test('triggers expirationCallback', () => {
+      const expirationCallback = jest.fn();
+      timedMap.set('first', 'first-value', 1500, expirationCallback);
+      timedMap.clear({
+        triggerExpirationCallback: true
+      });
+      expect(expirationCallback).toHaveBeenCalledTimes(1);
+    });
+    test('triggers onExpire callback', () => {
+      const onExpire = jest.fn();
+      timedMap.onExpire = onExpire;
+
+      timedMap.set('first', 'first-value', 1500);
+      timedMap.clear({
+        triggerOnExpire: true
+      });
+      timedMap.clear({
+        triggerOnExpire: false
+      });
+      expect(onExpire).toHaveBeenCalledTimes(1);
+    });
+    test('clears timeout correctly', () => {
+      jest.useFakeTimers();
+      const expireCallback = jest.fn();
+      timedMap.set('first', 'first-value', 1000, expireCallback);
+      timedMap.clear();
+      expect(timedMap.get('first')).toEqual(undefined);
+      jest.advanceTimersByTime(1000);
+      expect(expireCallback).not.toHaveBeenCalled();
+    });
   });
 
   describe('get', () => {
