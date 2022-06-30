@@ -86,6 +86,11 @@ export default class Es6TimedMap<Key, Value> {
     expirationTime: number,
     expirationCallback?: ExpirationCallback<Key, Value>
   ): Es6TimedMap<Key, Value> {
+    if (typeof expirationTime !== 'number')
+      throw new Error('expirationTime is not a number');
+    if (expirationTime < 0) throw new Error('expirationTime is less than 0');
+    if (expirationCallback && typeof expirationCallback !== 'function')
+      throw new Error('expirationCallback is not a function');
     this._core.set(key, value);
     this._timers.set(key, [
       setTimeout(() => {

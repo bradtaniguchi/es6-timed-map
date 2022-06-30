@@ -245,6 +245,21 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(500);
       expect(objTimedMap.get(myObj)).toBeFalsy();
     });
+    test('throws error if expirationTime is not a number', () => {
+      expect(() =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        timedMap.set('first-key', 'value', 'not a number' as any)
+      ).toThrow();
+    });
+    test('throws error if expirationTime is less than 0', () => {
+      expect(() => timedMap.set('first-key', 'value', -1)).toThrow();
+    });
+    test('throws error if expirationCallback is given but not a function', () => {
+      expect(() =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        timedMap.set('first-key', 'value', 100, 'not a function' as any)
+      ).toThrow();
+    });
   });
 
   // iteration methods
