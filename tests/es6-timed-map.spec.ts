@@ -245,6 +245,15 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(500);
       expect(objTimedMap.get(myObj)).toBeFalsy();
     });
+    test('works with single setParam', () => {
+      expect(
+        timedMap.set({
+          key: 'first-key',
+          value: 'first-value',
+          expirationTime: 100
+        })
+      ).toEqual(timedMap);
+    });
     test('throws error if expirationTime is not a number', () => {
       expect(() =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
