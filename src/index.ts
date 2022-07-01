@@ -21,6 +21,34 @@ export type Timeout<K, V> = [
 export type ExpirationCallback<Key, Value> = (key: Key, value: Value) => void;
 
 /**
+ * Type that represents the set methods single argument option
+ */
+export type SetParams<Key, Value> = {
+  key: Key;
+  value: Value;
+  expirationTime: number;
+  expirationCallback?: ExpirationCallback<Key, Value>;
+};
+
+/**
+ * Type-guard used in conjunection with other checks to verify
+ * the given key is a SetParam.
+ */
+export const isSetParams = <Key, Value>(
+  key: Key | SetParams<Key, Value>,
+  value?: Value,
+  expirationTime?: number,
+  expirationCallback?: ExpirationCallback<Key, Value>
+): key is SetParams<Key, Value> =>
+  !!(
+    key &&
+    typeof key === 'object' &&
+    value === undefined &&
+    expirationTime === undefined &&
+    expirationCallback === undefined
+  );
+
+/**
  * @name Es6TimedMap
  * An es6-map-like utility class with time based functions and support.
  *
@@ -78,27 +106,44 @@ export default class Es6TimedMap<Key, Value> {
    * @param expirationCallback an optional callback to execute once the timer expires
    *
    * TODO: verify no memory leaks via stress testing
-   * TODO: add alternate call scheme that supports more arguments
    */
+  public set(args: SetParams<Key, Value>): Es6TimedMap<Key, Value>;
   public set(
     key: Key,
     value: Value,
     expirationTime: number,
     expirationCallback?: ExpirationCallback<Key, Value>
+  ): Es6TimedMap<Key, Value>;
+  public set(
+    key: Key | SetParams<Key, Value>,
+    value?: Value,
+    expirationTime?: number,
+    expirationCallback?: ExpirationCallback<Key, Value>
   ): Es6TimedMap<Key, Value> {
+    if (isSetParams(key, value, expirationTime, expirationCallback)) {
+      // If the args are given like this, then we are within the "single argument"
+      // call and thus need to expand.
+      const params = key as SetParams<Key, Value>;
+      key = params.key;
+      value = params.value;
+      expirationTime = params.expirationTime;
+      expirationCallback = params.expirationCallback;
+    }
+
     if (typeof expirationTime !== 'number')
       throw new Error('expirationTime is not a number');
     if (expirationTime < 0) throw new Error('expirationTime is less than 0');
     if (expirationCallback && typeof expirationCallback !== 'function')
       throw new Error('expirationCallback is not a function');
-    this._core.set(key, value);
+    this._core.set(key, value as Value);
     this._timers.set(key, [
       setTimeout(() => {
         if (typeof expirationCallback === 'function')
-          expirationCallback(key, value);
-        if (typeof this.onExpire === 'function') this.onExpire(key, value);
-        this._core.delete(key);
-        this._timers.delete(key);
+          expirationCallback(key as Key, value as Value);
+        if (typeof this.onExpire === 'function')
+          this.onExpire(key as Key, value as Value);
+        this._core.delete(key as Key);
+        this._timers.delete(key as Key);
       }, expirationTime),
       Date.now(),
       expirationTime,
