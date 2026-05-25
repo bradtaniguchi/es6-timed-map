@@ -2,7 +2,6 @@ import Es6TimedMap from '../src';
 
 describe('Es6TimedMap', () => {
   let timedMap: Es6TimedMap<string, string>;
-  // TODO: add cross browser/environment checks/logging
   beforeEach(() => {
     timedMap = new Es6TimedMap();
   });
@@ -10,39 +9,39 @@ describe('Es6TimedMap', () => {
     jest.clearAllTimers();
   });
 
-  test('can be created', () => expect(new Es6TimedMap()).toBeTruthy());
+  it('can be created', () => expect(new Es6TimedMap()).toBeTruthy());
 
   describe('constructor', () => {
-    test('passed with empty array adds nothing', () => {
+    it('passed with empty array adds nothing', () => {
       timedMap = new Es6TimedMap([]);
       expect(timedMap.size).toEqual(0);
     });
-    test('passed non-array throws error', () => {
+    it('passed non-array throws error', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => new Es6TimedMap({} as any)).toThrowError();
+      expect(() => new Es6TimedMap({} as any)).toThrow();
     });
-    test('passed with elements', () => {
+    it('passed with elements', () => {
       timedMap = new Es6TimedMap<string, string>([['key', 'my value', 100]]);
       expect(timedMap.size).toEqual(1);
     });
   });
 
   describe('delete', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.delete).toBeTruthy();
       expect(typeof timedMap.delete === 'function').toBeTruthy();
     });
-    test('returns true if item existed and has been removed', () => {
+    it('returns true if item existed and has been removed', () => {
       jest.useFakeTimers();
       timedMap.set('first', 'first-value', 1000);
       expect(timedMap.get('first')).toEqual('first-value');
       timedMap.delete('first');
       expect(timedMap.get('first')).toBeFalsy();
     });
-    test('returns false if the element does not exist', () => {
+    it('returns false if the element does not exist', () => {
       expect(timedMap.delete('nonexistant')).toBeFalsy();
     });
-    test('returns false if the element expired', () => {
+    it('returns false if the element expired', () => {
       jest.useFakeTimers();
       timedMap.set('first', 'first-value', 50);
       jest.advanceTimersByTime(50);
@@ -51,8 +50,8 @@ describe('Es6TimedMap', () => {
   });
 
   describe('size', () => {
-    test('defaults to 0', () => expect(timedMap.size).toEqual(0));
-    test('returns size', () => {
+    it('defaults to 0', () => expect(timedMap.size).toEqual(0));
+    it('returns size', () => {
       jest.useFakeTimers();
       timedMap
         .set('first', 'first-value', 100)
@@ -61,7 +60,7 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(50);
       expect(timedMap.size).toEqual(3);
     });
-    test('returns number, after a few expires', () => {
+    it('returns number, after a few expires', () => {
       jest.useFakeTimers();
       timedMap
         .set('first', 'first-value', 100)
@@ -70,7 +69,7 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(100);
       expect(timedMap.size).toEqual(2);
     });
-    test('returns 0 after all expire', () => {
+    it('returns 0 after all expire', () => {
       jest.useFakeTimers();
       timedMap
         .set('first', 'first-value', 100)
@@ -82,18 +81,18 @@ describe('Es6TimedMap', () => {
   });
 
   describe('clear', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.clear).toBeTruthy();
       expect(typeof timedMap.clear === 'function').toBeTruthy();
     });
-    test('removes all existing entries', () => {
+    it('removes all existing entries', () => {
       timedMap.set('first', 'first-value', 1000);
       timedMap.set('two', 'two-value', 1000);
       timedMap.clear();
       expect(timedMap.get('first')).toEqual(undefined);
       expect(timedMap.get('two')).toEqual(undefined);
     });
-    test('triggers expirationCallback', () => {
+    it('triggers expirationCallback', () => {
       const expirationCallback = jest.fn();
       timedMap.set('first', 'first-value', 1500, expirationCallback);
       timedMap.clear({
@@ -101,7 +100,7 @@ describe('Es6TimedMap', () => {
       });
       expect(expirationCallback).toHaveBeenCalledTimes(1);
     });
-    test('triggers onExpire callback', () => {
+    it('triggers onExpire callback', () => {
       const onExpire = jest.fn();
       timedMap.onExpire = onExpire;
 
@@ -114,7 +113,7 @@ describe('Es6TimedMap', () => {
       });
       expect(onExpire).toHaveBeenCalledTimes(1);
     });
-    test('clears timeout correctly', () => {
+    it('clears timeout correctly', () => {
       jest.useFakeTimers();
       const expireCallback = jest.fn();
       timedMap.set('first', 'first-value', 1000, expireCallback);
@@ -123,33 +122,54 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(1000);
       expect(expireCallback).not.toHaveBeenCalled();
     });
+    it('does not throw when value is a falsy empty string', () => {
+      const falsyMap = new Es6TimedMap<string, string>();
+      falsyMap.set('key', '', 1000);
+      expect(() =>
+        falsyMap.clear({ triggerExpirationCallback: true })
+      ).not.toThrow();
+    });
+    it('does not throw when value is a falsy zero', () => {
+      const falsyMap = new Es6TimedMap<string, number>();
+      falsyMap.set('key', 0, 1000);
+      expect(() =>
+        falsyMap.clear({ triggerExpirationCallback: true })
+      ).not.toThrow();
+    });
+    it('does not throw when value is a falsy false', () => {
+      const falsyMap = new Es6TimedMap<string, boolean>();
+      falsyMap.set('key', false, 1000);
+      expect(() =>
+        falsyMap.clear({ triggerExpirationCallback: true })
+      ).not.toThrow();
+    });
   });
 
   describe('get', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.get).toBeTruthy();
       expect(typeof timedMap.get === 'function').toBeTruthy();
     });
-    test('returns item', () => {
+    it('returns item', () => {
       timedMap.set('first', 'first-value', 1000);
       expect(timedMap.get('first')).toEqual('first-value');
     });
-    test('does not return item', () => {
+    it('does not return item', () => {
       expect(timedMap.get('first')).toBeFalsy();
     });
-    test('does not return item if past expiration time', () => {
+    it('does not return item if past expiration time', () => {
       jest.useFakeTimers();
       timedMap.set('first', 'first-value', 100);
       jest.advanceTimersByTime(100);
       expect(timedMap.get('first')).toBeFalsy();
     });
-    test('works with symbols as a key', () => {
+    it('works with symbols as a key', () => {
       const symTimedMap = new Es6TimedMap<symbol, string>();
       const symKey = Symbol('first');
       symTimedMap.set(symKey, 'first-value', 1000);
       expect(symTimedMap.get(symKey)).toEqual('first-value');
     });
-    test('works with objects as a key', () => {
+    it('works with objects as a key', () => {
       const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
       const objKey = { thisKey: 'first-key' };
       objTimedMap.set(objKey, 'first-value', 1000);
@@ -169,12 +189,12 @@ describe('Es6TimedMap', () => {
       Date.now = nativeDateNow;
     });
 
-    test('returns undefined if timer does not exist', () => {
+    it('returns undefined if timer does not exist', () => {
       const timeLeft = timedMap.getTimeLeft('fake-key');
       expect(timeLeft).toBeUndefined();
     });
 
-    test('returns the correct time left for a valid key', () => {
+    it('returns the correct time left for a valid key', () => {
       timedMap.set('first-key', 'first-value', 2000);
 
       Date.now = jest.fn(() => 1000);
@@ -190,29 +210,29 @@ describe('Es6TimedMap', () => {
   });
 
   describe('has', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.has).toBeTruthy();
       expect(typeof timedMap.has === 'function').toBeTruthy();
     });
-    test('returns true', () => {
+    it('returns true', () => {
       timedMap.set('first', 'first-value', 1000);
       expect(timedMap.has('first')).toEqual(true);
     });
-    test('returns false', () => {
+    it('returns false', () => {
       expect(timedMap.has('other')).toEqual(false);
     });
-    test('returns false if past expiration time', () => {
+    it('returns false if past expiration time', () => {
       timedMap.set('first', 'first-value', 1000);
       jest.advanceTimersByTime(1001);
       expect(timedMap.has('first')).toEqual(false);
     });
-    test('works with symbols as a key', () => {
+    it('works with symbols as a key', () => {
       const symTimedMap = new Es6TimedMap<symbol, string>();
       const symKey = Symbol('first');
       symTimedMap.set(symKey, 'first-value', 1000);
       expect(symTimedMap.has(symKey)).toEqual(true);
     });
-    test('works with objects as a key', () => {
+    it('works with objects as a key', () => {
       const objTimedMap = new Es6TimedMap<{ [key: string]: string }, string>();
       const objKey = { thisKey: 'first-key' };
       objTimedMap.set(objKey, 'first-value', 1000);
@@ -221,15 +241,14 @@ describe('Es6TimedMap', () => {
   });
 
   describe('set', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.set).toBeTruthy();
       expect(typeof timedMap.has === 'function').toBeTruthy();
     });
-    test('returns map object, to support chaining', () => {
+    it('returns map object, to support chaining', () => {
       expect(timedMap.set('first-key', 'first-value', 100)).toEqual(timedMap);
     });
-    // **note** this isn't supported yet, as its too new with TS 4.2
-    test('works with symbols as a key', () => {
+    it('works with symbols as a key', () => {
       const symbolTimedMap = new Es6TimedMap<symbol, string>();
       const mySymbol = Symbol('mine');
       symbolTimedMap.set(mySymbol, 'symbol-value', 100);
@@ -237,7 +256,7 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(500);
       expect(symbolTimedMap.has(mySymbol)).toBeFalsy();
     });
-    test('works with objects as a key', () => {
+    it('works with objects as a key', () => {
       const objTimedMap = new Es6TimedMap<Record<string, unknown>, string>();
       const myObj = {};
       objTimedMap.set(myObj, 'first-value', 500);
@@ -245,7 +264,7 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(500);
       expect(objTimedMap.get(myObj)).toBeFalsy();
     });
-    test('works with single setParam', () => {
+    it('works with single setParam', () => {
       expect(
         timedMap.set({
           key: 'first-key',
@@ -254,16 +273,16 @@ describe('Es6TimedMap', () => {
         })
       ).toEqual(timedMap);
     });
-    test('throws error if expirationTime is not a number', () => {
+    it('throws error if expirationTime is not a number', () => {
       expect(() =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         timedMap.set('first-key', 'value', 'not a number' as any)
       ).toThrow();
     });
-    test('throws error if expirationTime is less than 0', () => {
+    it('throws error if expirationTime is less than 0', () => {
       expect(() => timedMap.set('first-key', 'value', -1)).toThrow();
     });
-    test('throws error if expirationCallback is given but not a function', () => {
+    it('throws error if expirationCallback is given but not a function', () => {
       expect(() =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         timedMap.set('first-key', 'value', 100, 'not a function' as any)
@@ -273,34 +292,34 @@ describe('Es6TimedMap', () => {
 
   // iteration methods
   describe('keys', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.keys).toBeTruthy();
       expect(typeof timedMap.keys === 'function').toBeTruthy();
     });
-    test('returns an iterator function', () => {
+    it('returns an iterator function', () => {
       expect(typeof timedMap.keys()[Symbol.iterator]).toEqual('function');
     });
-    test('returns keys in insertion order', () => {
+    it('returns keys in insertion order', () => {
       timedMap
         .set('first-key', 'some-value', 1000)
         .set('second-key', 'some-value', 500);
 
       expect(Array.from(timedMap.keys())).toEqual(['first-key', 'second-key']);
     });
-    test('returns empty array when nothing is added yet', () => {
+    it('returns empty array when nothing is added yet', () => {
       expect(Array.from(timedMap.keys())).toEqual([]);
     });
   });
 
   describe('values', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.values).toBeTruthy();
       expect(typeof timedMap.values === 'function').toBeTruthy();
     });
-    test('returns an iterator function', () => {
+    it('returns an iterator function', () => {
       expect(typeof timedMap.values()[Symbol.iterator]).toEqual('function');
     });
-    test('returns keys in insertion order', () => {
+    it('returns keys in insertion order', () => {
       timedMap
         .set('first-key', 'some-value', 1000)
         .set('second-key', 'some-value', 500);
@@ -310,20 +329,20 @@ describe('Es6TimedMap', () => {
         'some-value'
       ]);
     });
-    test('returns empty array when nothing is added yet', () => {
+    it('returns empty array when nothing is added yet', () => {
       expect(Array.from(timedMap.values())).toEqual([]);
     });
   });
 
   describe('entries', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.entries).toBeTruthy();
       expect(typeof timedMap.entries === 'function').toBeTruthy();
     });
-    test('returns an iterator function', () => {
+    it('returns an iterator function', () => {
       expect(typeof timedMap.entries()[Symbol.iterator]).toEqual('function');
     });
-    test('returns keys in insertion order', () => {
+    it('returns keys in insertion order', () => {
       timedMap
         .set('first-key', 'some-value', 1000)
         .set('second-key', 'some-value', 500);
@@ -333,29 +352,28 @@ describe('Es6TimedMap', () => {
         ['second-key', 'some-value']
       ]);
     });
-    test('returns empty array when nothing is added yet', () => {
+    it('returns empty array when nothing is added yet', () => {
       expect(Array.from(timedMap.entries())).toEqual([]);
     });
   });
 
   describe('forEach', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.forEach).toBeTruthy();
       expect(typeof timedMap.forEach === 'function').toBeTruthy();
     });
-    test('applies this', () => {
+    it('applies this', () => {
       timedMap
         .set('first', 'first-value', 100)
         .set('second', 'second-value', 300)
         .set('third', 'third-value', 200);
-      // **note** I get a weird eslint issue warning here without disable
-      // eslint-disable-next-line prettier/prettier
+
       timedMap.forEach((value, key, self) => {
         // only check for this reference
         expect(self === timedMap).toEqual(true);
       }, timedMap);
     });
-    test('can be used to iterate', () => {
+    it('can be used to iterate', () => {
       timedMap
         .set('first', 'first-value', 100)
         .set('second', 'second-value', 300)
@@ -383,11 +401,11 @@ describe('Es6TimedMap', () => {
   });
 
   describe('supports iteration', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap[Symbol.iterator]).toBeTruthy();
       expect(typeof timedMap[Symbol.iterator]).toBe('function');
     });
-    test('can be used to iterate', () => {
+    it('can be used to iterate', () => {
       timedMap.set('foo', 'bar', 1000);
       for (const [key, value] of timedMap) {
         expect(key).toBe('foo');
@@ -404,17 +422,17 @@ describe('Es6TimedMap', () => {
       timedMap.set('second', 'second-value', 50);
       timedMap.set('third', 'third-value', 200);
     });
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.timers).toBeTruthy();
       expect(typeof timedMap.timers === 'function').toBeTruthy();
     });
-    test('returns timers in insertion order', () => {
+    it('returns timers in insertion order', () => {
       const timers = timedMap.timers();
       expect(timers.next().value[0]).toEqual('first');
       expect(timers.next().value[0]).toEqual('second');
       expect(timers.next().value[0]).toEqual('third');
     });
-    test('returns timers in expiration order with arguments', () => {
+    it('returns timers in expiration order with arguments', () => {
       const timers1 = timedMap.timers('expiration');
       expect(timers1.next().value[0]).toEqual('second');
       expect(timers1.next().value[0]).toEqual('third');
@@ -427,11 +445,11 @@ describe('Es6TimedMap', () => {
   });
 
   describe('touch', () => {
-    test('exists', () => {
+    it('exists', () => {
       expect(timedMap.touch).toBeTruthy();
       expect(typeof timedMap.touch === 'function').toBeTruthy();
     });
-    test('updates existing timers by the given amount', () => {
+    it('updates existing timers by the given amount', () => {
       jest.useFakeTimers();
 
       const onExpire = jest.fn();
@@ -442,12 +460,12 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(1000);
 
       //If timedMap.touch failed, the callback would be triggered
-      expect(onExpire).not.toBeCalled();
+      expect(onExpire).not.toHaveBeenCalled();
 
       jest.runAllTimers();
-      expect(onExpire).toBeCalled();
+      expect(onExpire).toHaveBeenCalled();
     });
-    test('reset existing timer', () => {
+    it('reset existing timer', () => {
       jest.useFakeTimers();
 
       const onExpire = jest.fn();
@@ -456,21 +474,39 @@ describe('Es6TimedMap', () => {
       jest.advanceTimersByTime(500);
       timedMap.touch('foo');
       jest.advanceTimersByTime(500);
-      expect(onExpire).not.toBeCalled();
+      expect(onExpire).not.toHaveBeenCalled();
 
       jest.advanceTimersByTime(500);
-      expect(onExpire).toBeCalled();
+      expect(onExpire).toHaveBeenCalled();
     });
-    test('fail to update missing key', () => {
+    it('fail to update missing key', () => {
       expect(timedMap.touch('foo')).toBeFalsy();
+    });
+    it('returns true and preserves a falsy empty-string value', () => {
+      const falsyMap = new Es6TimedMap<string, string>();
+      falsyMap.set('key', '', 1000);
+      expect(falsyMap.touch('key')).toBe(true);
+      expect(falsyMap.get('key')).toEqual('');
+    });
+    it('returns true and preserves a falsy zero value', () => {
+      const falsyMap = new Es6TimedMap<string, number>();
+      falsyMap.set('key', 0, 1000);
+      expect(falsyMap.touch('key')).toBe(true);
+      expect(falsyMap.get('key')).toEqual(0);
+    });
+    it('returns true and preserves a falsy false value', () => {
+      const falsyMap = new Es6TimedMap<string, boolean>();
+      falsyMap.set('key', false, 1000);
+      expect(falsyMap.touch('key')).toBe(true);
+      expect(falsyMap.get('key')).toEqual(false);
     });
   });
 
   describe('onExpire', () => {
-    test('does not exist', () => {
+    it('does not exist', () => {
       expect(timedMap.onExpire).toBeNull();
     });
-    test('returns the item on expiration', () => {
+    it('returns the item on expiration', () => {
       jest.useFakeTimers();
       timedMap.set('foo', 'bar', 1000);
 
@@ -479,7 +515,7 @@ describe('Es6TimedMap', () => {
 
       jest.runAllTimers();
 
-      expect(onExpire).toBeCalledWith(
+      expect(onExpire).toHaveBeenCalledWith(
         expect.stringMatching('foo'),
         expect.stringMatching('bar')
       );
