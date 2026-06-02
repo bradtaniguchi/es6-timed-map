@@ -8,6 +8,12 @@
 
 An es6-map-like utility class with time based functions and support
 
+## Quick note about maintenance
+
+I made this repo years back more as a dry-run to publishing npm packages than a serious package you should actually use in your projects.
+
+Its a small simply utility that is probably better to just copy paste directly than use the package.
+
 ## Summary
 
 This class provides a similar interface as the [es6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map), however
@@ -50,10 +56,6 @@ https://bradtaniguchi.dev/es6-timed-map
 ## Security
 
 See [SECURITY](./SECURITY.md)
-
-## Hacktoberfest 2020 :jack_o_lantern:
-
-This repo participated in [hacktoberfest 2020](https://hacktoberfest.digitalocean.com/), so thank you for all of those that participated, keep learning, keep building and happy hacktoberfest! :+1:
 
 ## License
 
