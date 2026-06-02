@@ -12,10 +12,10 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: setup node v14, for npm
+      - name: setup node v24, for npm
         uses: actions/setup-node@v1
         with:
-          node-version: '14'
+          node-version: '24'
           registry-url: https://registry.npmjs.org/
 
       - name: install deps
